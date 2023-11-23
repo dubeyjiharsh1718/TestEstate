@@ -352,7 +352,7 @@ const ViewDetails = ({ navigation }) => {
       </View>
 
       {/* Render Modal for Text Input */}
-      <Modal visible={isModalVisible} animationType="slide" transparent={true}>
+      <Modal visible={isModalVisible} animationType="slide" transparent={true} style={{width: 500}}>
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
             <Text style={styles.modalTitle}>Edit {editField}</Text>

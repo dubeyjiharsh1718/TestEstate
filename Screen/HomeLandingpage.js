@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, ScrollView, Pressable,TextInput, Image, Dimensions,StyleSheet } from 'react-native';
-import { Text, Input, Icon as ElementsIcon, SearchBar } from 'react-native-elements';
+import { Text, Input, Icon as ElementsIcon, SearchBar, Button } from 'react-native-elements';
 import { useIsFocused } from '@react-navigation/native';
 import { useBackHandler } from '@react-native-community/hooks';
 import { StatusBar } from 'react-native';
@@ -14,6 +14,9 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import COLORS from '../assets/const/colors';
 import houses from '../assets/const/houses';
 import Colors from '../constants/Colors';
+import Modal from 'react-native-modal';
+import { Slider } from 'react-native-elements';
+
 
 const { width } = Dimensions.get("screen");
 
@@ -43,6 +46,147 @@ const HomeScreen = ({ navigation }) => {
   };
 
   useBackHandler(isFocused ? backActionHandler : () => false);
+
+  const [isBottomSheetVisible, setBottomSheetVisible] = useState(false);
+
+  const [selectedButtonIndex, setSelectedButtonIndex] = useState(null);
+  const [selectedButtonIndexkitchen, setSelectedButtonIndexkitchen] = useState(null);
+  const [selectedButtonIndexparking, setSelectedButtonIndexparking] = useState(null);
+  const [selectedButtonIndexcities, setSelectedButtonIndexcities] = useState(null);
+
+  const handleButtonClick = (index) => {
+    setSelectedButtonIndex(index);
+  };
+  const handleButtonClickkitchen = (index) => {
+    setSelectedButtonIndexkitchen(index);
+  };
+  const handleButtonClickparking = (index) => {
+    setSelectedButtonIndexparking(index);
+  };
+  const handleButtonClickcities = (index) => {
+    setSelectedButtonIndexcities(index);
+  };
+
+  const buttons = [
+    { title: 'Any', index: 0 },
+    { title: '1', index: 1 },
+    { title: '2', index: 2 },
+    { title: '3', index: 3 },
+    { title: '4', index: 4 },
+  ];
+
+  const buttonscities = [
+    { title: 'Any', index: 0 },
+    { title: 'Thane', index: 1 },
+    { title: 'Mumbai', index: 2 },
+    { title: 'Kalyan', index: 3 },
+  ];
+
+  const [priceRange, setPriceRange] = useState(50);
+  const toggleBottomSheet = () => {
+    setBottomSheetVisible(!isBottomSheetVisible);
+  };
+
+  const renderBottomSheetContent = () => (
+    <View style={styles.bottomSheetContent}>
+      <View>
+      <Text style={styles.modaltext}>Bathrooms</Text>
+      <View style={{ flexDirection: 'row', marginBottom: 10, }}>
+        {buttons.map((button, index) => (
+          <Button
+            key={index}
+            title={button.title}
+            type="outline"
+            buttonStyle={{
+              width: 60,
+              padding: 5,
+              marginRight: 8,
+              backgroundColor: selectedButtonIndex === index ? Colors.btn : 'white',
+            }}
+            titleStyle={{ fontSize: 14, padding: 0, color: selectedButtonIndex === index ? 'white' : 'black' }}
+            onPress={() => handleButtonClick(index)}
+          />
+        ))}
+      </View></View>
+      <View>
+      <Text style={styles.modaltext}>Kitchens</Text>
+      <View style={{ flexDirection: 'row', marginBottom: 10, }}>
+        {buttons.map((button, index) => (
+          <Button
+            key={index}
+            title={button.title}
+            type="outline"
+            buttonStyle={{
+              width: 60,
+              padding: 5,
+              marginRight: 8,
+              backgroundColor: selectedButtonIndexkitchen === index ? Colors.btn : 'white',
+            }}
+            titleStyle={{ fontSize: 14, padding: 0, color: selectedButtonIndexkitchen === index ? 'white' : 'black' }}
+            onPress={() => handleButtonClickkitchen(index)}
+          />
+        ))}
+      </View></View>
+      <View>
+      <Text style={styles.modaltext}>Parkings</Text>
+      <View style={{ flexDirection: 'row', marginBottom: 10, }}>
+        {buttons.map((button, index) => (
+          <Button
+            key={index}
+            title={button.title}
+            type="outline"
+            buttonStyle={{
+              width: 60,
+              padding: 5,
+              marginRight: 8,
+              backgroundColor: selectedButtonIndexparking === index ? Colors.btn : 'white',
+            }}
+            titleStyle={{ fontSize: 14, padding: 0, color: selectedButtonIndexparking === index ? 'white' : 'black' }}
+            onPress={() => handleButtonClickparking(index)}
+          />
+        ))}
+      </View></View>
+
+
+      <View>
+      <Text style={styles.modaltext}>Cities</Text>
+      <View style={{ flexDirection: 'row', marginBottom: 10, }}>
+        {buttonscities.map((button, index) => (
+          <Button
+            key={index}
+            title={button.title}
+            type="outline"
+            buttonStyle={{
+              width: 70,
+              padding: 5,
+              marginRight: 8,
+              backgroundColor: selectedButtonIndexcities === index ? Colors.btn : 'white',
+            }}
+            titleStyle={{ fontSize: 14, padding: 0, color: selectedButtonIndexcities === index ? 'white' : 'black' }}
+            onPress={() => handleButtonClickcities(index)}
+          />
+        ))}
+      </View></View>
+
+      <View>
+        <Text style={styles.modaltext}>Price Range</Text>
+        <Slider
+          value={priceRange}
+          minimumValue={0}
+          maximumValue={100}
+          step={1}
+          thumbTintColor="blue"
+          trackStyle={{ height: 10, backgroundColor: 'lightgrey' }}
+          thumbStyle={{ height: 20, width: 20, backgroundColor: 'blue' }}
+          onValueChange={(value) => setPriceRange(value)} // Update the priceRange state
+        />
+        <Text style={{fontSize: 17, color: 'black'}}>{`Price Range: ${priceRange}`}</Text>
+      </View>
+      {/* <Pressable onPress={toggleBottomSheet}>
+        <Text style={{ fontSize: 20 }}>Close Bottom Sheet</Text>
+      </Pressable> */}
+    </View>
+  );
 
   const ListCategories = () => {
     return (
@@ -159,11 +303,20 @@ const HomeScreen = ({ navigation }) => {
                         <Icon name="search" size={25} style={{color:Colors.heilightcolor}} />
                         <TextInput placeholder='Search address, city, location' />
                     </View>
-  <Pressable style={styles.sortbtn}>
+  <Pressable style={styles.sortbtn} onPress={toggleBottomSheet}>
     <Icon name='tune' type='material' color={COLORS.white} size={25} />
   </Pressable>
 </View>
-
+<Modal
+        isVisible={isBottomSheetVisible}
+        onBackdropPress={toggleBottomSheet}
+        onBackButtonPress={toggleBottomSheet}
+        animationIn="slideInUp"
+        animationOut="slideOutDown"
+        backdropOpacity={0.5}
+      >
+        {renderBottomSheetContent()}
+      </Modal>
         <ListOptions />
         <ListCategories />
         <FlatList
@@ -317,7 +470,24 @@ const styles = StyleSheet.create({
       paddingBottom: 3,
       borderBottomWidth: 2,
     },
-
+    bottomSheetContent: {
+      position: 'absolute',
+      bottom: 0,
+      left: 0,
+      right: 0,
+      backgroundColor: 'white',
+      padding: 22,
+      justifyContent: 'center',
+      borderTopLeftRadius: 20,
+      borderTopRightRadius: 20,
+      borderColor: 'rgba(0, 0, 0, 0.1)',
+      margin: 0,
+    },
+    modaltext:{
+      color: 'black',
+      marginBottom: 8,
+      fontSize: 17,
+    },
 
 });
 
