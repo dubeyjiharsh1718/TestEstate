@@ -158,7 +158,20 @@ export default function Profile({ navigation }) {
           <AwesomeIcon name='pencil-alt' size={20} color={'#15273F'} /></TouchableOpacity>
         </View>
       {/*  */}
-      {/*  */}
+     
+      <TouchableOpacity onPress={() => navigation.navigate("SavedProperty")}>
+        <View style={styles.action}>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <View style={[styles.iconContainer, { backgroundColor: Colors.heilightcolor }]}>
+            <AwesomeIcon name='heart' size={20} color={'white'} />
+            </View>
+            <Text style={[styles.actionTitle, { color: '#F25B68' }]}>
+              Saved Property
+            </Text>
+          </View>
+        </View>
+      </TouchableOpacity>
+       {/*  */}
       <TouchableOpacity onPress={() => navigation.navigate("ViewDetails")}>
         <View style={styles.action}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -220,7 +233,7 @@ const styles = StyleSheet.create({
     width: 120,
     height: 120,
     borderRadius: 60,
-    backgroundColor: Colors.heilightcolor,
+    backgroundColor: Colors.background,
     justifyContent: 'center',
     alignItems: 'center'
 

@@ -78,7 +78,7 @@ const LoginScreen = ({ navigation }) => {
             },
             {
               text: 'Continue',
-              onPress: () => navigation.navigate('Selectlocation'),
+              onPress: () => navigation.navigate('OwnerHome'),
             },
           ],
           { cancelable: false }

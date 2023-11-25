@@ -1,6 +1,19 @@
 import React, { useState } from 'react';
-import { View, ScrollView, Pressable,TextInput, Image, Dimensions,StyleSheet } from 'react-native';
-import { Text, Input, Icon as ElementsIcon, SearchBar, Button } from 'react-native-elements';
+import {
+  View,
+  ScrollView,
+  Pressable,
+  TextInput,
+  Image,
+  Dimensions,
+  StyleSheet,
+} from 'react-native';
+import {
+  Text,
+  Icon as ElementsIcon,
+  Button,
+  Card as ElementsCard,
+} from 'react-native-elements';
 import { useIsFocused } from '@react-navigation/native';
 import { useBackHandler } from '@react-native-community/hooks';
 import { StatusBar } from 'react-native';
@@ -9,20 +22,19 @@ import { FlatList } from 'react-native-gesture-handler';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import AwesomeIcon from 'react-native-vector-icons/FontAwesome5';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { Card as ElementsCard } from 'react-native-elements';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import COLORS from '../assets/const/colors';
-import houses from '../assets/const/houses';
-import Colors from '../constants/Colors';
 import Modal from 'react-native-modal';
 import { Slider } from 'react-native-elements';
 
+import COLORS from '../assets/const/colors';
+import Colors from '../constants/Colors';
+import houses from '../assets/const/houses';
 
-const { width } = Dimensions.get("screen");
+const { width, height } = Dimensions.get('screen');
 
 const HomeScreen = ({ navigation }) => {
-  var location = "Kalyan";
-  var PersonName = "Harsh Dubey";
+  var location = 'Kalyan';
+  var PersonName = 'Harsh Dubey';
 
   const isFocused = useIsFocused();
 
@@ -35,12 +47,12 @@ const HomeScreen = ({ navigation }) => {
       {
         text: 'No',
         onPress: () => null,
-        style: 'cancel'
+        style: 'cancel',
       },
       {
         text: 'Yes',
         onPress: () => BackHandler.exitApp(),
-      }
+      },
     ]);
     return true;
   };
@@ -49,10 +61,10 @@ const HomeScreen = ({ navigation }) => {
 
   const [isBottomSheetVisible, setBottomSheetVisible] = useState(false);
 
-  const [selectedButtonIndex, setSelectedButtonIndex] = useState(null);
-  const [selectedButtonIndexkitchen, setSelectedButtonIndexkitchen] = useState(null);
-  const [selectedButtonIndexparking, setSelectedButtonIndexparking] = useState(null);
-  const [selectedButtonIndexcities, setSelectedButtonIndexcities] = useState(null);
+  const [selectedButtonIndex, setSelectedButtonIndex] = useState(0);
+  const [selectedButtonIndexkitchen, setSelectedButtonIndexkitchen] = useState(0);
+  const [selectedButtonIndexparking, setSelectedButtonIndexparking] = useState(0);
+  const [selectedButtonIndexcities, setSelectedButtonIndexcities] = useState(0);
 
   const handleButtonClick = (index) => {
     setSelectedButtonIndex(index);
@@ -83,13 +95,13 @@ const HomeScreen = ({ navigation }) => {
   ];
 
   const [priceRange, setPriceRange] = useState(50);
+
   const toggleBottomSheet = () => {
     setBottomSheetVisible(!isBottomSheetVisible);
   };
-
   const renderBottomSheetContent = () => (
-    <View style={styles.bottomSheetContent}>
-      <View>
+    <View style={[styles.bottomSheetContent, { height: height * 0.6 }]}>
+      <View style={styles.filtercontent}>
       <Text style={styles.modaltext}>Bathrooms</Text>
       <View style={{ flexDirection: 'row', marginBottom: 10, }}>
         {buttons.map((button, index) => (
@@ -107,8 +119,8 @@ const HomeScreen = ({ navigation }) => {
             onPress={() => handleButtonClick(index)}
           />
         ))}
-      </View></View>
-      <View>
+      </View ></View>
+      <View style={styles.filtercontent}>
       <Text style={styles.modaltext}>Kitchens</Text>
       <View style={{ flexDirection: 'row', marginBottom: 10, }}>
         {buttons.map((button, index) => (
@@ -127,7 +139,7 @@ const HomeScreen = ({ navigation }) => {
           />
         ))}
       </View></View>
-      <View>
+      <View style={styles.filtercontent}>
       <Text style={styles.modaltext}>Parkings</Text>
       <View style={{ flexDirection: 'row', marginBottom: 10, }}>
         {buttons.map((button, index) => (
@@ -146,9 +158,7 @@ const HomeScreen = ({ navigation }) => {
           />
         ))}
       </View></View>
-
-
-      <View>
+      <View style={styles.filtercontent}>
       <Text style={styles.modaltext}>Cities</Text>
       <View style={{ flexDirection: 'row', marginBottom: 10, }}>
         {buttonscities.map((button, index) => (
@@ -314,6 +324,7 @@ const HomeScreen = ({ navigation }) => {
         animationIn="slideInUp"
         animationOut="slideOutDown"
         backdropOpacity={0.5}
+        style={{ padding: width * 0.05, margin: 0 }}
       >
         {renderBottomSheetContent()}
       </Modal>
@@ -470,19 +481,22 @@ const styles = StyleSheet.create({
       paddingBottom: 3,
       borderBottomWidth: 2,
     },
-    bottomSheetContent: {
-      position: 'absolute',
-      bottom: 0,
-      left: 0,
-      right: 0,
-      backgroundColor: 'white',
-      padding: 22,
-      justifyContent: 'center',
-      borderTopLeftRadius: 20,
-      borderTopRightRadius: 20,
-      borderColor: 'rgba(0, 0, 0, 0.1)',
-      margin: 0,
-    },
+      bottomSheetContent: {
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        backgroundColor: 'white',
+        padding: height * 0.03,
+        justifyContent: 'center',
+        borderTopLeftRadius: width * 0.05,
+        borderTopRightRadius: width * 0.05,
+        borderColor: 'rgba(0, 0, 0, 0.1)',
+        margin: 0,
+      },
+      filtercontent:{
+       justifyContent: 'center',
+      },
     modaltext:{
       color: 'black',
       marginBottom: 8,

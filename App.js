@@ -19,6 +19,7 @@ import CreatenewPassword from './Screen/Createnewpassword';
 import Createnewproperty from './Screen/Ownerpage/Createnewproperty';
 import EnterOtpNewPass from './Screen/EnterOtpNewPass';
 import ViewDetails from './Screen/ViewDetails';
+import SavedProperty from './Screen/SavedProperty ';
 
 const Stack = createStackNavigator();
 
@@ -38,6 +39,7 @@ export default function App() {
         <Stack.Screen name='Createnewproperty' component={Createnewproperty} />
         <Stack.Screen name="Profile" component={Profile} />
         <Stack.Screen name='ViewDetails' component={ViewDetails} />
+        <Stack.Screen name='SavedProperty' component={SavedProperty} />
         <Stack.Screen name="HomeScreen" component={HomeScreen} />
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="Alltenents" component={Alltenents} />

@@ -9,12 +9,16 @@ import Font from '../constants/Font';
 import FontSize from '../constants/FontSize';
 import Spacing from "../constants/Spacing";
 import Lightbox from 'react-native-lightbox';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+
 
 // import ImageFullScreenScreen from './ImageFullScreenScreen';
 
 function PropertyDetailsScreen({ route, navigation }) {
   const { property } = route.params;
   const [scale, setScale] = useState(new Animated.Value(1));
+  const [isHeartClicked, setIsHeartClicked] = useState(false);
 
   const onImagePress = (imageUrl) => {
     navigation.navigate('ImageFullScreen', { imageUrl });
@@ -33,6 +37,34 @@ function PropertyDetailsScreen({ route, navigation }) {
       }).start();
     }
   };
+
+  const handleHeartClick = () => {
+    setIsHeartClicked(!isHeartClicked);
+  };
+
+
+  const handleSaveProperty = async () => {
+    setIsHeartClicked(!isHeartClicked);
+    try {
+      // Get existing saved properties from local storage
+      const savedPropertiesString = await AsyncStorage.getItem('savedProperties');
+      const savedProperties = JSON.parse(savedPropertiesString) || [];
+  
+      const newProperty = {
+        image: property.image,
+        title: property.name, 
+        price:property.price,
+      };
+      savedProperties.push(newProperty);
+  
+      await AsyncStorage.setItem('savedProperties', JSON.stringify(savedProperties));
+  
+      navigation.navigate('SavedProperty');
+    } catch (error) {
+      console.error('Error saving property:', error);
+    }
+  };
+  
 
   return (
     <ScrollView style={styles.container}>
@@ -61,7 +93,15 @@ function PropertyDetailsScreen({ route, navigation }) {
           </TouchableOpacity>
         ))}
       </Swiper>
-      <View style={styles.iconRow}>
+      <View style={{alignItems: 'flex-end', marginTop: -20,}}>
+      <TouchableOpacity onPress={handleSaveProperty}>
+          <FontAwesome5
+            name="heart"
+            style={[styles.homedetailicon, { fontSize: 32, backgroundColor: isHeartClicked ? 'red' : 'white', borderRadius: 20 }]}
+          />
+        </TouchableOpacity>
+        </View>
+        <View style={styles.iconRow}>
         <View style={styles.iconWithText}>
           <FontAwesome5 name="bed" style={styles.homedetailicon} />
           <Text style={styles.iconText}>3 Bedrooms</Text>
@@ -88,6 +128,23 @@ function PropertyDetailsScreen({ route, navigation }) {
         <Text style={styles.propertyPrice}>{property.price}</Text>
         <Text style={styles.propertyDescription}>Description:</Text>
         <Text style={styles.propertyDescriptionText}>{property.description}</Text>
+        <Text style={[styles.propertyName,{marginTop: 10}]}>Information</Text>
+        <View style={styles.infowithivon}>
+        <Icon name="checkbox-marked-circle-outline" style={[styles.homedetailicon,{marginRight: 10}]} />
+        <Text style={styles.propertyValue}>School 2km</Text></View>
+        <View style={styles.infowithivon}>
+       <Icon name="checkbox-marked-circle-outline" style={[styles.homedetailicon,{marginRight: 10}]} />
+        <Text style={styles.propertyValue}>Hospital 1km</Text></View>
+        <View style={styles.infowithivon}>
+        <Icon name="checkbox-marked-circle-outline" style={[styles.homedetailicon,{marginRight: 10}]} />
+        <Text style={styles.propertyValue}>GYM 300m</Text></View>
+        <View style={styles.infowithivon}>
+        <Icon name="checkbox-marked-circle-outline" style={[styles.homedetailicon,{marginRight: 10}]} />
+        <Text style={styles.propertyValue}>Station 1km</Text></View>
+
+        <View style={{ backgroundColor: COLORS.white,elevation: 10,marginTop: 20}}>
+          <Image source={require("../assets/images/maptest.png")} style={styles.mapimg} />
+        </View>
       </View>
       {/* <FlatList
   data={property.allimages}
@@ -105,7 +162,7 @@ function PropertyDetailsScreen({ route, navigation }) {
 
       <View style={styles.centerContainer}>
         <TouchableOpacity style={styles.signInButton}>
-          <Text style={styles.signInText}>Book Now</Text>
+          <Text style={styles.signInText}>Request For Visit</Text>
         </TouchableOpacity>
       </View>
    
@@ -238,6 +295,13 @@ optionCardImagetop: {
 optionListContainertop: {
   flexDirection: 'row',
 paddingHorizontal: 20,
+},
+infowithivon:{
+  flexDirection: 'row',
+},
+mapimg:{
+  height: 220,
+  width: 350,
 },
 });
 
