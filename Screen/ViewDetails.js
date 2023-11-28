@@ -12,10 +12,15 @@ import Ionic from 'react-native-vector-icons/Ionicons';
 import Feather from 'react-native-vector-icons/Feather';
 import Colors from '../constants/Colors';
 import AwesomeIcon from 'react-native-vector-icons/FontAwesome5';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { ScrollView } from 'react-native-gesture-handler';
+import ImagePicker from 'react-native-image-crop-picker';
+
 
 const ViewDetails = ({ route, navigation }) => {
   const [isEditing, setIsEditing] = useState(false);
+  const [isEditingStyle, setIsEditingStyle] = useState(false);
+  const [action, setaction] = useState(false);
   const [editableName, setEditableName] = useState('Harsh');
   const [editablePhone, setEditablePhone] = useState('9874563120');
   const [editableEmail, setEditableEmail] = useState('dubeyjiharsj@gmail.com');
@@ -28,12 +33,32 @@ const ViewDetails = ({ route, navigation }) => {
     ToastAndroid.show('Edited Successfully!', ToastAndroid.SHORT);
   };
 
+  const [profileImage, setProfileImage] = useState(
+    require("../assets/images/tenent2.jpeg")
+  ); 
+  const handleImageSelect = () => {
+    ImagePicker.openPicker({
+    }).then((response) => {
+      if (!response.didCancel) {
+        setProfileImage({ uri: response.path });
+      }
+    }).catch((error) => {
+      console.log('ImagePicker Error: ', error);
+    });
+  };
+  
+
+
   const handleEdit = () => {
     setIsEditing(true);
+    setIsEditingStyle(true);
+    setaction(true);
   };
 
   const handleSave = () => {
     setIsEditing(false);
+    setIsEditingStyle(false);
+    setaction(false);
     TostMessage();
     navigation.goBack();
   };
@@ -69,11 +94,19 @@ const ViewDetails = ({ route, navigation }) => {
         )}
       </View>
       <View style={{ padding: 20, alignItems: 'center' }}>
-        <Image
-          source={require("../assets/images/tenent2.jpeg")}
-          style={{ width: 80, height: 80, borderRadius: 100 }}
-        />
-        <Text style={{ color: '#3493D9' }}>Change profile photo</Text>
+        <TouchableOpacity onPress={handleImageSelect}>
+          <Image
+            source={profileImage}
+            style={{ width: 90, height: 90, borderRadius: 100 }}
+          />
+          <FontAwesome
+            name='camera'
+            size={25}
+            style={{ color: Colors.heilightcolor, marginTop: -20, marginLeft: 60 }}
+          />
+        </TouchableOpacity>
+        <View style={{marginTop: 10}}>
+        <Text style={{ color: '#3493D9', }}>Change profile photo</Text></View>
       </View>
       <View style={{ padding: 10 }}>
         <View style={styles.action}>
@@ -82,9 +115,8 @@ const ViewDetails = ({ route, navigation }) => {
               <Feather name="user" size={25} style={{ color: Colors.heilightcolor }} />
             </View>
             <TextInput
-              style={[styles.actionTitle, { color: '#15273F' }]}
+            style={[styles.actionTitle, { color: '#15273F' }]}
               value={editableName}
-              onChangeText={(text) => setEditableName(text)}
               editable={isEditing}
             />
           </View>
@@ -99,7 +131,7 @@ const ViewDetails = ({ route, navigation }) => {
               />
             </View>
             <TextInput
-              style={[styles.actionTitle, { color: '#15273F' }]}
+             style={[styles.actionTitle, { color: '#15273F' }]}
               value={editablePhone}
               onChangeText={(text) => setEditablePhone(text)}
               editable={isEditing}
@@ -112,59 +144,59 @@ const ViewDetails = ({ route, navigation }) => {
               <Feather name="mail" size={25} style={{ color: Colors.heilightcolor }} />
             </View>
             <TextInput
-              style={[styles.actionTitle, { color: '#15273F' }]}
+           style={[styles.actionTitle, { color: '#15273F' }]}
               value={editableEmail}
               onChangeText={(text) => setEditableEmail(text)}
               editable={isEditing}
             />
           </View>
         </View>
-        <View style={styles.action}>
+        <View style={action ? styles.actionEditing : styles.action}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <View style={[styles.iconContainer, {}]}>
               <Feather name="calendar" size={25} style={{ color: Colors.heilightcolor }} />
             </View>
             <TextInput
-              style={[styles.actionTitle, { color: '#15273F' }]}
+             style={isEditingStyle ? styles.actionEditing : styles.action}
               value={editableDateofbirth}
               onChangeText={(text) => setEditableDateofbirth(text)}
               editable={isEditing}
             />
           </View>
         </View>
-        <View style={styles.action}>
+        <View style={action ? styles.actionEditing : styles.action}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <View style={[styles.iconContainer, {}]}>
               <Feather name="users" size={25} style={{ color: Colors.heilightcolor }} />
             </View>
             <TextInput
-              style={[styles.actionTitle, { color: '#15273F' }]}
+              style={isEditingStyle ? styles.actionEditing : styles.action}
               value={editableGender}
               onChangeText={(text) => setEditableGender(text)}
               editable={isEditing}
             />
           </View>
         </View>
-        <View style={styles.action}>
+        <View style={action ? styles.actionEditing : styles.action}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <View style={[styles.iconContainer, {}]}>
               <Feather name="map" size={25} style={{ color: Colors.heilightcolor }} />
             </View>
             <TextInput
-              style={[styles.actionTitle, { color: '#15273F' }]}
+                style={isEditingStyle ? styles.actionEditing : styles.action}
               value={editableState}
               onChangeText={(text) => setEditableState(text)}
               editable={isEditing}
             />
           </View>
         </View>
-        <View style={styles.action}>
+        <View style={action ? styles.actionEditing : styles.action}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <View style={[styles.iconContainer, {}]}>
               <Feather name="map-pin" size={25} style={{ color: Colors.heilightcolor }} />
             </View>
             <TextInput
-              style={[styles.actionTitle, { color: '#15273F' }]}
+              style={isEditingStyle ? styles.actionEditing : styles.action}
               value={editableCity}
               onChangeText={(text) => setEditableCity(text)}
               editable={isEditing}
@@ -196,6 +228,20 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    color: 'balck',
+    color: '#15273F',
+    fontSize: 20,
+  },
+  actionEditing: {
+    marginTop: 10,
+    paddingHorizontal: 29,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    borderBottomWidth: 1,
+    borderBottomColor: '#EFEFEF',
+    color: '#15273F',
+    fontSize: 20,
   },
   iconContainer: {
     width: 40,
@@ -204,11 +250,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  actionTitle: {
-    marginLeft: 19,
-    fontSize: 20,
-    color: '#15273F',
-  },
+   actionTitle: {
+     marginLeft: 19,
+     fontSize: 20,
+     color: '#15273F',
+   },
 });
 
 export default ViewDetails;

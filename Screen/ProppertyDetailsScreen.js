@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { View, Text, FlatList, StyleSheet, Image, TouchableOpacity, ScrollView, Animated } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, Animated,Dimensions } from 'react-native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import { Input,Button } from 'react-native-elements';
 import { PinchGestureHandler, State } from 'react-native-gesture-handler';
 import Swiper from 'react-native-swiper';
 import Colors from "../constants/Colors";
@@ -11,14 +12,22 @@ import Spacing from "../constants/Spacing";
 import Lightbox from 'react-native-lightbox';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import MapView, { Marker } from 'react-native-maps';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import { Modal } from 'react-native';
 
-
-// import ImageFullScreenScreen from './ImageFullScreenScreen';
+const { width, height } = Dimensions.get('screen');
 
 function PropertyDetailsScreen({ route, navigation }) {
   const { property } = route.params;
   const [scale, setScale] = useState(new Animated.Value(1));
   const [isHeartClicked, setIsHeartClicked] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+
+
+  const toggleModal = () => {
+    setModalVisible(!modalVisible);
+  };  
 
   const onImagePress = (imageUrl) => {
     navigation.navigate('ImageFullScreen', { imageUrl });
@@ -42,7 +51,6 @@ function PropertyDetailsScreen({ route, navigation }) {
     setIsHeartClicked(!isHeartClicked);
   };
 
-
   const handleSaveProperty = async () => {
     setIsHeartClicked(!isHeartClicked);
     try {
@@ -53,18 +61,25 @@ function PropertyDetailsScreen({ route, navigation }) {
       const newProperty = {
         image: property.image,
         title: property.name, 
-        price:property.price,
+        price: property.price,
+        location:property.location,
       };
       savedProperties.push(newProperty);
   
       await AsyncStorage.setItem('savedProperties', JSON.stringify(savedProperties));
   
-      navigation.navigate('SavedProperty');
+      // navigation.navigate('SavedProperty');
     } catch (error) {
       console.error('Error saving property:', error);
     }
   };
   
+  const [mapRegion, setMapRegion] = useState({
+    latitude: parseFloat(-122.08400000000002),
+    longitude: parseFloat(37.421998333333335),
+    latitudeDelta: 0.0922,
+    longitudeDelta: 0.0421,
+  });
 
   return (
     <ScrollView style={styles.container}>
@@ -72,36 +87,46 @@ function PropertyDetailsScreen({ route, navigation }) {
         {property.allimages.map((allimages, index) => (
           <TouchableOpacity key={index} onPress={() => onImagePress(allimages)}>
             <Lightbox>
-            <View style={styles.propertyImg}>
-              <PinchGestureHandler
-                onGestureEvent={onPinchEvent}
-                onHandlerStateChange={onPinchStateChange}
-              >
-                <Animated.View style={styles.propertyImg}>
-                  <Animated.Image
-                    source={allimages}
-                    style={[
-                      styles.propertyImage,
-                      {
-                        transform: [{ scale: scale }],
-                      },
-                    ]}
-                  />
-                </Animated.View>
-              </PinchGestureHandler>
-            </View></Lightbox>
+              <View style={styles.propertyImg}>
+                <PinchGestureHandler
+                  onGestureEvent={onPinchEvent}
+                  onHandlerStateChange={onPinchStateChange}
+                >
+                  <Animated.View style={styles.propertyImg}>
+                    <Animated.Image
+                      source={allimages}
+                      style={[
+                        styles.propertyImage,
+                        {
+                          transform: [{ scale: scale }],
+                        },
+                      ]}
+                    />
+                  </Animated.View>
+                </PinchGestureHandler>
+              </View>
+            </Lightbox>
           </TouchableOpacity>
         ))}
       </Swiper>
-      <View style={{alignItems: 'flex-end', marginTop: -20,}}>
+      <View style={{alignItems: 'flex-end', marginTop: -20}}>
       <TouchableOpacity onPress={handleSaveProperty}>
-          <FontAwesome5
-            name="heart"
-            style={[styles.homedetailicon, { fontSize: 32, backgroundColor: isHeartClicked ? 'red' : 'white', borderRadius: 20 }]}
-          />
+          {isHeartClicked ? (
+            <FontAwesome
+              name="heart"
+              style={[styles.homedetailicon, { fontSize: 32, color: 'red' }]}
+            />
+          ) : (
+            <Icon
+              name="cards-heart-outline"
+              style={[styles.homedetailicon, { fontSize: 32 }]}
+            />
+          )}
         </TouchableOpacity>
-        </View>
-        <View style={styles.iconRow}>
+      </View>
+      <View style={{flexDirection: 'row'}}>
+    <Text style={styles.propertyPrice}>{property.price}</Text><Text style={{ marginTop: 10,marginLeft: 5,fontSize: 15,}}>monthly</Text></View>
+      <View style={styles.iconRow}>
         <View style={styles.iconWithText}>
           <FontAwesome5 name="bed" style={styles.homedetailicon} />
           <Text style={styles.iconText}>3 Bedrooms</Text>
@@ -125,47 +150,96 @@ function PropertyDetailsScreen({ route, navigation }) {
           <FontAwesome5 name="map-marker-alt" style={styles.locationIcon} />
           <Text style={styles.propertyValue}>{property.location}</Text>
         </View>
-        <Text style={styles.propertyPrice}>{property.price}</Text>
         <Text style={styles.propertyDescription}>Description:</Text>
         <Text style={styles.propertyDescriptionText}>{property.description}</Text>
-        <Text style={[styles.propertyName,{marginTop: 10}]}>Information</Text>
+        <Text style={[styles.propertyName, {marginTop: 10}]}>Information</Text>
         <View style={styles.infowithivon}>
-        <Icon name="checkbox-marked-circle-outline" style={[styles.homedetailicon,{marginRight: 10}]} />
-        <Text style={styles.propertyValue}>School 2km</Text></View>
-        <View style={styles.infowithivon}>
-       <Icon name="checkbox-marked-circle-outline" style={[styles.homedetailicon,{marginRight: 10}]} />
-        <Text style={styles.propertyValue}>Hospital 1km</Text></View>
-        <View style={styles.infowithivon}>
-        <Icon name="checkbox-marked-circle-outline" style={[styles.homedetailicon,{marginRight: 10}]} />
-        <Text style={styles.propertyValue}>GYM 300m</Text></View>
-        <View style={styles.infowithivon}>
-        <Icon name="checkbox-marked-circle-outline" style={[styles.homedetailicon,{marginRight: 10}]} />
-        <Text style={styles.propertyValue}>Station 1km</Text></View>
-
-        <View style={{ backgroundColor: COLORS.white,elevation: 10,marginTop: 20}}>
-          <Image source={require("../assets/images/maptest.png")} style={styles.mapimg} />
+          <Icon name="checkbox-marked-circle-outline" style={[styles.homedetailicon, {marginRight: 10}]} />
+          <Text style={styles.propertyValue}>School 2km</Text>
         </View>
+        <View style={styles.infowithivon}>
+          <Icon name="checkbox-marked-circle-outline" style={[styles.homedetailicon, {marginRight: 10}]} />
+          <Text style={styles.propertyValue}>Hospital 1km</Text>
+        </View>
+        <View style={styles.infowithivon}>
+          <Icon name="checkbox-marked-circle-outline" style={[styles.homedetailicon, {marginRight: 10}]} />
+          <Text style={styles.propertyValue}>GYM 300m</Text>
+        </View>
+        <View style={styles.infowithivon}>
+          <Icon name="checkbox-marked-circle-outline" style={[styles.homedetailicon, {marginRight: 10}]} />
+          <Text style={styles.propertyValue}>Station 1km</Text>
+        </View>
+
+        {/* <View style={{backgroundColor: COLORS.white, elevation: 10, marginTop: 20}}>
+          <Image source={require("../assets/images/maptest.png")} style={styles.mapimg} />
+        </View> */}
+        <MapView
+          style={{flex: 1, height: 200,backgroundColor: COLORS.white, elevation: 10, marginTop: 20}}
+          region={mapRegion}
+          onRegionChange={(region) => setMapRegion(region)}
+        >
+          <Marker
+            coordinate={{
+              latitude: parseFloat(37.421998333333335),
+              longitude: parseFloat(-122.08400000000002),
+            }}
+            title="Your Location"
+            description="You are here!"
+          />
+        </MapView>
       </View>
-      {/* <FlatList
-  data={property.allimages}
-  renderItem={({ item, index }) => (
-    <TouchableOpacity onPress={() => onImagePress(item)}>
-      <View style={styles.optionCardtopsearch}>
-        <Image source={item.source} style={styles.optionCardImagetop} />
-        <Text style={{ marginTop: 11, fontSize: 18, color: COLORS.dark }}>{item.title}</Text>
-      </View>
-    </TouchableOpacity>
-  )}
-  contentContainerStyle={styles.optionListContainertop}
-  showsHorizontalScrollIndicator={false}
-/> */}
 
       <View style={styles.centerContainer}>
-        <TouchableOpacity style={styles.signInButton}>
-          <Text style={styles.signInText}>Request For Visit</Text>
+      <TouchableOpacity style={styles.signInButton} onPress={toggleModal}>
+        <Text style={styles.signInText}>Request For Visit</Text>
+      </TouchableOpacity>
+    </View>
+
+    <Modal
+    animationIn="slideInUp"
+    animationOut="slideOutDown"
+    backdropOpacity={0.5}
+    animationType="slide"
+    transparent={true}
+    visible={modalVisible}
+    onRequestClose={() => {
+      setModalVisible(!modalVisible);
+    }}
+  >
+    {/* Background Overlay */}
+    <View style={styles.overlay} />
+
+    {/* Modal Content */}
+    <View style={[styles.bottomSheetContent, { height: height * 0.3 }]}>
+      {/* Your modal content goes here */}
+      <Text style={{ fontSize: 20, color: 'black' }}>Your Request For Visit Modal </Text>
+      <Text style={{ fontSize: 20, color: 'black' }}>Time for Visit- 10-4</Text>
+
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <Input
+          placeholder={'Send Message Request'}
+          keyboardType="text"
+          // onChangeText={handleEmailChange}
+          containerStyle={styles.inputContainer}
+          leftIcon={<Icon name="chat-plus" size={20} style={{ color: Colors.heilightcolor }} />}
+        />
+        <TouchableOpacity >
+          <Icon name="send-circle" size={38} color={Colors.btn} style={{ marginBottom: 18, }} />
         </TouchableOpacity>
       </View>
-   
+      {/* Add a button to close the modal */}
+      {/* <TouchableOpacity onPress={toggleModal} style={{ marginTop: 10 }}>
+        <Text style={{color: 'black'}}>Close Modal</Text>
+      </TouchableOpacity> */}
+      <View style={{marginLeft: 30,}}> 
+      <Button
+            title={'Send Request'}
+            onPress={toggleModal}
+            buttonStyle={styles.closemodalButton}
+          /></View>
+    </View>
+  </Modal>
+
     </ScrollView>
   );
 }
@@ -214,12 +288,12 @@ const styles = StyleSheet.create({
   propertyPrice : {
     marginTop: 5,
     marginBottom:5,
-    fontSize: 16,
-    color : "red",
+    color:'black',
+    fontSize: 19,
   },
   propertyName: {
     fontSize: 20,
-    color: 'red',
+    color: 'black',
   },
   centerContainer: {
     alignItems: "center",
@@ -253,7 +327,7 @@ const styles = StyleSheet.create({
   locationIcon: {
     fontSize: 16,
     marginRight: 5,
-    color: 'blue',
+    color: Colors.heilightcolor,
   },
   iconRow: {
     flexDirection: 'row',
@@ -303,6 +377,33 @@ mapimg:{
   height: 220,
   width: 350,
 },
+bottomSheetContent: {
+  position: 'absolute',
+  bottom: 0,
+  left: 0,
+  right: 0,
+  backgroundColor: Colors.background,
+  paddingLeft: 20,
+  padding: 60,
+  marginRight: 20,
+  marginLeft: 20,
+  justifyContent: 'center',
+  borderTopLeftRadius: width * 0.07,
+  borderTopRightRadius: width * 0.07,
+  borderColor: 'rgba(0, 0, 0, 0.1)',
+  margin: 0,
+},
+overlay: {
+  ...StyleSheet.absoluteFillObject,
+  backgroundColor: 'rgba(0, 0, 0, 0.5)',
+},
+closemodalButton: {
+  backgroundColor: Colors.btn,
+  borderRadius: 10,
+  height: 46,
+  // width: 200,
+},
+
 });
 
 export default PropertyDetailsScreen;

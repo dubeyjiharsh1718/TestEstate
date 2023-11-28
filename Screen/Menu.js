@@ -1,8 +1,9 @@
-import { View, Text, Image, StyleSheet, SafeAreaView, Pressable } from 'react-native'
+import { View, Text, Image, StyleSheet, SafeAreaView, Pressable,TouchableOpacity } from 'react-native'
 import React from 'react'
 import Icon from "react-native-vector-icons/MaterialIcons"
 import Feather from 'react-native-vector-icons/Feather'
 import { Surface } from 'react-native-paper'
+import AwesomeIcon from 'react-native-vector-icons/FontAwesome5';
 import Colors from '../constants/Colors'
 
 const Action = ({ icon, title, screen,iconBackgroundColor }) => {
@@ -74,6 +75,18 @@ export default function Menu({ navigation }) {
       <Action title={'Notifications'} icon={'notifications'} />
       <Action title={'Deactivation'} icon={'delete'} />
       <Action title={'Help & Support'} icon={'help'} />
+      <TouchableOpacity onPress={() => navigation.navigate("SavedProperty")}>
+        <View style={styles.action}>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <View style={[styles.iconContainer, { backgroundColor: Colors.heilightcolor }]}>
+            <AwesomeIcon name='heart' size={20} color={'white'} />
+            </View>
+            <Text style={[styles.actionTitle, { color: '#F25B68' }]}>
+              Saved Property
+            </Text>
+          </View>
+        </View>
+      </TouchableOpacity>
 
       {/*  */}
       <Pressable onPress={() => navigation.navigate("Login")}>

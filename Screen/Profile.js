@@ -86,12 +86,6 @@ export default function Profile({ navigation }) {
         <View style={styles.imageContainer}>
           <Image source={profileImage} style={styles.profileImageStyle} />
         </View>
-        <View style={{marginLeft: 60,marginTop: -26,borderRadius: 30,backgroundColor: Colors.gray,height: 30,width:36,alignItems: 'center'}}>
-        <Feather
-            name='camera'
-            size={25}
-            style={{ color: Colors.heilightcolor,marginTop:2 }}
-          /></View>
         {/* <View style={styles.nameSection}>
           <Text style={styles.accountTitle}>{fullname}</Text>
 
@@ -119,8 +113,7 @@ export default function Profile({ navigation }) {
               Harsh
             </Text>
           </View>
-          <TouchableOpacity>
-          <AwesomeIcon name='pencil-alt' size={20} color={'#15273F'} /></TouchableOpacity>
+          
         </View>
       {/*  */}
       <View style={styles.action}>
@@ -136,8 +129,7 @@ export default function Profile({ navigation }) {
             9874563120
             </Text> 
           </View>
-          <TouchableOpacity>
-          <AwesomeIcon name='pencil-alt' size={20} color={'#15273F'} /></TouchableOpacity>
+          
         </View>
       {/*  */}
       <View style={styles.action}>
@@ -154,23 +146,11 @@ export default function Profile({ navigation }) {
               dubeyjiharsj@gmail.com
             </Text>
           </View>
-          <TouchableOpacity>
-          <AwesomeIcon name='pencil-alt' size={20} color={'#15273F'} /></TouchableOpacity>
+          
         </View>
       {/*  */}
      
-      <TouchableOpacity onPress={() => navigation.navigate("SavedProperty")}>
-        <View style={styles.action}>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <View style={[styles.iconContainer, { backgroundColor: Colors.heilightcolor }]}>
-            <AwesomeIcon name='heart' size={20} color={'white'} />
-            </View>
-            <Text style={[styles.actionTitle, { color: '#F25B68' }]}>
-              Saved Property
-            </Text>
-          </View>
-        </View>
-      </TouchableOpacity>
+   
        {/*  */}
       <TouchableOpacity onPress={() => navigation.navigate("ViewDetails")}>
         <View style={styles.action}>
