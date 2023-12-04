@@ -20,6 +20,10 @@ import Createnewproperty from './Screen/Ownerpage/Createnewproperty';
 import EnterOtpNewPass from './Screen/EnterOtpNewPass';
 import ViewDetails from './Screen/ViewDetails';
 import SavedProperty from './Screen/SavedProperty ';
+import Addtenents from './Screen/Ownerpage/Addtenent';
+import RequestedProperty from './Screen/RequestedProperty';
+import Menu from './Screen/Menu';
+import PropertyListScreen from './Screen/PropertyListScreen';
 
 const Stack = createStackNavigator();
 
@@ -40,8 +44,12 @@ export default function App() {
         <Stack.Screen name="Profile" component={Profile} />
         <Stack.Screen name='ViewDetails' component={ViewDetails} />
         <Stack.Screen name='SavedProperty' component={SavedProperty} />
+        <Stack.Screen name="RequestedProperty" component={RequestedProperty} />
         <Stack.Screen name="HomeScreen" component={HomeScreen} />
+        <Stack.Screen name='PropertyListScreen' component={PropertyListScreen} />
         <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="Menu" component={Menu} />
+        <Stack.Screen name="Addtenents" component={Addtenents} />
         <Stack.Screen name="Alltenents" component={Alltenents} />
         <Stack.Screen name="OwnerHome" component={OwnerHome} />
         <Stack.Screen name="Selectlocation" component={Selectlocation} />

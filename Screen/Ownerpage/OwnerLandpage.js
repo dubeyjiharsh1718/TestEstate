@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -12,8 +12,11 @@ import {
   Image,
   View,
   Text,
+  Dimensions
 } from 'react-native';
+import { Button } from 'react-native-elements';
 import { useBackHandler } from '@react-native-community/hooks';
+import { Modal } from 'react-native';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import AwesomeIcon from 'react-native-vector-icons/FontAwesome5';
 import { useIsFocused } from '@react-navigation/native';
@@ -21,15 +24,22 @@ import COLORS from '../../assets/const/colors';
 import Colors from '../../constants/Colors';
 
 
-
-// const { width } = Dimensions.get("screen");
+const { width, height } = Dimensions.get('screen');
 
 const OwnerLanddpage = ({ navigation }) => {
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const toggleModal = () => {
+      setModalVisible(!modalVisible);
+    };
     var location = "Kalyan";
     var PersonName = "Harsh Dubey";
 
     const handlAlltenentPress = () => {
       navigation.navigate('Alltenents');
+    };
+    const Addtenents = () => {
+      navigation.navigate('Addtenents');
     };
     const handluploadpropertyPress = () => {
         navigation.navigate('Createnewproperty');
@@ -74,7 +84,7 @@ const OwnerLanddpage = ({ navigation }) => {
                 </TouchableOpacity>
                 <TouchableOpacity
                    style={styles.item}
-                   onPress={handlAlltenentPress}
+                   onPress={Addtenents}
                   >
                   <Image source={require('../../assets/images/Buy_a_home.webp')} style={styles.image} />
                   <Text>Add Tenant</Text>
@@ -88,6 +98,7 @@ const OwnerLanddpage = ({ navigation }) => {
                 </TouchableOpacity>
                 <TouchableOpacity
                    style={styles.item}
+                   onPress={toggleModal}
                   >
                   <Image source={require('../../assets/images/document.png')} style={styles.image} />
                   <Text>Add Document</Text>
@@ -98,6 +109,7 @@ const OwnerLanddpage = ({ navigation }) => {
                   <Image source={require('../../assets/images/report.png')} style={styles.image} />
                   <Text>Report</Text>
                 </TouchableOpacity><TouchableOpacity
+                   onPress={handlAlltenentPress}
                    style={styles.item}
                   >
                   <Image source={require('../../assets/images/addproperty.jpg')} style={styles.image} />
@@ -126,6 +138,47 @@ const OwnerLanddpage = ({ navigation }) => {
             </View>
             
           </View>
+          <Modal
+    animationIn="slideInUp"
+    animationOut="slideOutDown"
+    backdropOpacity={0.5}
+    animationType="slide"
+    transparent={true}
+    visible={modalVisible}
+    onRequestClose={() => {
+      setModalVisible(!modalVisible);
+    }}
+  >
+    <View style={styles.overlay} />
+
+    <View style={[styles.bottomSheetContent, { height: height * 0.5 }]}>
+      <Text style={{ fontSize: 20, color: 'black',paddingLeft:20,paddingBottom: 5, }}>Property Tour Request</Text>
+      <Text style={{ fontSize: 15,paddingLeft: 20  }}>Accept or Decline the request to let the buyer know about availability</Text>
+     <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10,marginBottom: 10, backgroundColor: '#f9f9f9',
+    elevation: 5,padding: 7, }}>
+  <Image source={require('../../assets/images/banlore.png')} style={{ width: 80, height: 80, marginRight: 10 }} />
+ <View style={{marginLeft: 10}}>
+  <Text style={{color: 'black', fontSize: 18}}>Shivam Apt</Text>
+  <Text style={{width: 200,}}>New DP Rd, Surya Nagar, Katrap, Badlapur, Maharashtra 421503</Text></View>
+</View>
+
+  
+      <View style={{marginLeft: 2,}}> 
+      <Button
+            title={'Accept Request'}
+            onPress={toggleModal}
+            buttonStyle={[styles.closemodalButton,{backgroundColor: '#d2fed2', marginBottom: 10, marginTop: 10,}]}
+            titleStyle={{ color: 'green' }}
+          /></View>
+           <View style={{marginLeft: 2,}}> 
+      <Button
+            title={'Deny Request'}
+            onPress={toggleModal}
+            buttonStyle={[styles.closemodalButton,{backgroundColor: '#fed2d2'}]}
+            titleStyle={{ color: 'red' }}
+          /></View>
+    </View>
+  </Modal>
           </ScrollView>
         );
     }
@@ -270,6 +323,29 @@ const styles = StyleSheet.create({
         marginBottom: 15,
         backgroundColor: '#635cbb',
         padding : 8,
+      },
+      bottomSheetContent: {
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        backgroundColor: Colors.background,
+        // padding: 60,
+        justifyContent: 'center',
+        borderTopLeftRadius: width * 0.07,
+        borderTopRightRadius: width * 0.07,
+        borderColor: 'rgba(0, 0, 0, 0.1)',
+        margin: 0,
+      },
+      overlay: {
+        ...StyleSheet.absoluteFillObject,
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      },
+      closemodalButton: {
+        // backgroundColor: Colors.btn,
+        borderRadius: 10,
+        height: 46,
+        // width: 320,
       },
 
 });

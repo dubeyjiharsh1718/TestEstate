@@ -5,11 +5,18 @@ import { Card, Button } from 'react-native-elements';
 import Colors from '../constants/Colors';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import COLORS from '../assets/const/colors';
+import Toast from 'react-native-toast-message';
+import { useNavigation } from '@react-navigation/native';
 
 
 const { width, height } = Dimensions.get('screen');
 const SavedProperty = () => {
+  const navigation = useNavigation(); 
   const [savedProperties, setSavedProperties] = useState([]);
+
+  const handlefindproperty = () => {
+    navigation.navigate('PropertyListScreen')
+  }
 
   useEffect(() => {
     const fetchSavedProperties = async () => {
@@ -33,6 +40,15 @@ const SavedProperty = () => {
       await AsyncStorage.setItem('savedProperties', JSON.stringify(updatedSavedProperties));
 
       setSavedProperties(updatedSavedProperties);
+      Toast.show({
+        type: 'success',
+        position: 'center',
+        text1: 'Property Removed',
+        visibilityTime: 2000,
+        autoHide: true,
+        topOffset: 30,
+        bottomOffset: 40,
+      });
     } catch (error) {
       console.error('Error removing saved property:', error);
     }
@@ -40,7 +56,26 @@ const SavedProperty = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={[styles.title,{marginLeft: 20}]}>Saved Properties</Text>
+      <Text style={[styles.title, { marginLeft: 20 }]}>Saved Properties</Text>
+      {savedProperties.length === 0 ? (
+       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center',marginTop: -50 }}>
+       <Image
+         source={require('.././assets/images/wishlist.jpg')}
+         style={{ width: 150, height: 150, marginBottom: 5 }}
+       />
+       <Text style={{ fontSize: 18, textAlign: 'center', color: 'black', marginTop: 20 }}>
+         You haven't added any
+       </Text>
+       <Text style={{ fontSize: 18, color: 'black', textAlign: 'center', marginBottom: 20 }}>
+         properties yet
+       </Text>
+       <Button
+         title={'Find property to save'}
+        onPress={handlefindproperty}
+         buttonStyle={styles.closemodalButton}
+       />
+     </View>
+      ) : (
       <FlatList
         data={savedProperties}
         keyExtractor={(item, index) => index.toString()}
@@ -70,6 +105,8 @@ const SavedProperty = () => {
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
       />
+      )}
+       <Toast ref={(ref) => Toast.setRef(ref)} />
     </View>
   );
 };
@@ -87,7 +124,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: '100%',
-    height: 100, // Adjust the height as needed
+    height: 100,
   },
   buttonContainer: {
     // marginTop: 5,
@@ -105,21 +142,26 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   propertyImage: {
-    width: 350, 
     height: 160,
-    resizeMode: 'cover',
     borderRadius: 8,
-    alignItems: 'center',
+    width: '100%',
   },
   card: {
-    marginTop: 5,
     height: 300,
+    marginTop: 5,
     backgroundColor: COLORS.white,
     elevation: 10,
     width: width - 40,
     marginBottom: 20,
     padding: 15,
-    borderRadius: 20,
+    borderRadius: 10,
+},
+closemodalButton: {
+  backgroundColor: Colors.btn,
+  borderRadius: 3,
+  height: 40,
+  paddingLeft: 10, 
+  paddingRight: 10
 },
 });
 

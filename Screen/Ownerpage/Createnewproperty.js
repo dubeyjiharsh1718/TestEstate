@@ -9,40 +9,38 @@ import {
   Dimensions,
   ScrollView,
 } from 'react-native';
+import CheckBox from 'react-native-check-box';
 import Feather from 'react-native-vector-icons/Feather';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { Surface } from 'react-native-paper';
 import COLORS from '../../assets/const/colors';
+import { Input, Dropdown, } from 'react-native-elements';
+import { Picker,} from '@react-native-picker/picker';
+import Colors from '../../constants/Colors';
+
 
 const { width } = Dimensions.get('screen');
 
 function Createnewproperty({ navigation }) {
   const [searchQuery, setSearchQuery] = useState('');
+  const [isChecked, setChecked] = useState(false);
+
 
   const [currentSection, setCurrentSection] = useState('Overview');
-  const [selectedSection, setSelectedSection] = useState('Overview'); // Add this line
+  const [selectedSection, setSelectedSection] = useState('Overview'); 
   const sections = ['Overview', 'Location', 'Amenities', 'Photo'];
 
-  const [value, setValue] = useState(null);
-  const [schoolChecked, setSchoolChecked] = useState(false);
-  const [groundChecked, setGroundChecked] = useState(false);
-  const [stationChecked, setStationChecked] = useState(false);
 
-  const toggleCheckbox = (checkboxType) => {
-    switch (checkboxType) {
-      case 'school':
-        setSchoolChecked(!schoolChecked);
-        break;
-      case 'ground':
-        setGroundChecked(!groundChecked);
-        break;
-      case 'station':
-        setStationChecked(!stationChecked);
-        break;
-      default:
-        break;
-    }
+
+
+  const [value, setValue] = useState(null);
+  const [text, setText] = useState('');
+
+  const handleInputChange = (value) => {
+    setText(value);
   };
+
+ 
 
   const handleSectionClick = (section) => {
     setCurrentSection(section);
@@ -102,27 +100,127 @@ function Createnewproperty({ navigation }) {
 
       {currentSection === 'Overview' && (
         <View>
-          {/* Overview Section Content */}
+          <View>
+            <Text style={styles.overviewheading}>Property Name</Text>
+            <Input
+        placeholder="Type something"
+        inputContainerStyle={{
+          borderBottomWidth: 1,  
+          borderWidth: 1,
+          borderColor: '#000', 
+          borderRadius: 8,
+          paddingHorizontal: 10,
+        }}
+        inputStyle={{
+          fontSize: 16, 
+        }}
+      />
+          </View>
+
+          <View>
+      <Text style={styles.overviewheading}>Select Category</Text>
+      <View style={styles.pickerContainer}>
+      <Picker
+        selectedValue={value}
+        onValueChange={(itemValue, itemIndex) => setValue(itemValue)}
+        style={styles.picker}
+      >
+        <Picker.Item label="1" value="1" />
+        <Picker.Item label="2" value="2" />
+        {/* Add more categories as needed */}
+      </Picker>
+    </View>
+          </View>
+        
+          <View style={{marginTop: 15}}>
+            <Text style={styles.overviewheading}>Description</Text>
+            <Input
+          placeholder="Type something..."
+          multiline={true}
+          numberOfLines={4}
+          onChangeText={handleInputChange}
+          value={text}
+          inputStyle={styles.textArea}
+        />
+          </View>
+
+        <View style={styles.containerpicker}>
+            <View style={styles.pickerWrapper}>
+              <Text style={styles.overviewheadin}>Bedroom</Text>
+              <View style={styles.pickerContaine}>
+                <Picker
+                  selectedValue={value}
+                  onValueChange={(itemValue, itemIndex) => setValue(itemValue)}
+                  style={styles.picker1}
+                >
+                  <Picker.Item label="1" value="1" />
+                  <Picker.Item label="2" value="2" />
+                  {/* Add more categories as needed */}
+                </Picker>
+              </View>
+            </View>
+
+            <View style={styles.pickerWrapper}>
+              <Text style={styles.overviewheadin}>Bathroom</Text>
+              <View style={styles.pickerContaine}>
+                <Picker
+                  selectedValue={value}
+                  onValueChange={(itemValue, itemIndex) => setValue(itemValue)}
+                  style={styles.picker1}
+                >
+                  <Picker.Item label="1" value="1" />
+                  <Picker.Item label="2" value="2" />
+                  {/* Add more categories as needed */}
+                </Picker>
+              </View>
+            </View>
+
+            <View style={styles.pickerWrapper}>
+              <Text style={styles.overviewheadin}>Kitchen</Text>
+              <View style={styles.pickerContaine}>
+                <Picker
+                  selectedValue={value}
+                  onValueChange={(itemValue, itemIndex) => setValue(itemValue)}
+                  style={styles.picker1}
+                >
+                  <Picker.Item label="1" value="1" />
+                  <Picker.Item label="2" value="2" />
+                  {/* Add more categories as needed */}
+                </Picker>
+              </View>
+            </View>
+
+          </View>
         </View>
       )}
 
+
 {currentSection === 'Location' && <View>
       <Text style={{ fontSize: 18, color: 'black',marginBottom:5, }}>Property Address</Text>
-                <TextInput
-                  style={styles.otpInput}
-                  keyboardType="default"
-                  placeholder="Address"
-                  textAlignVertical="top"
-                />
-                <Text style={{ fontSize: 18, color: 'black',marginBottom:5, }}>Property Location</Text>
+          <Input
+          placeholder="Property Address"
+          multiline={true}
+          numberOfLines={4}
+          onChangeText={handleInputChange}
+          value={text}
+          inputStyle={styles.textArea}
+        />
+       <Text style={{ fontSize: 18, color: 'black',marginBottom:5, }}>Property Location</Text>
 
-                <TextInput
-                  style={{ ...styles.otpInput, height: 50 }}
-                  keyboardType="default"
-                  placeholder="Location"
-                  textAlignVertical="top"
-                />
-                <View style={styles.table}>
+        <Input
+        placeholder="Property Location"
+        inputContainerStyle={{
+          borderBottomWidth: 1,  
+          borderWidth: 1,
+          borderColor: '#000', 
+          borderRadius: 8,
+          paddingHorizontal: 10,
+        }}
+        inputStyle={{
+          fontSize: 16, 
+        }}
+      />
+  <View style={styles.table}>
   <View style={styles.row}>
     <View style={styles.column}>
       <Text style={styles.headertable}>Add Utilities</Text>
@@ -137,70 +235,46 @@ function Createnewproperty({ navigation }) {
         <FontAwesome5
           name="school"
           size={15}
-          color="#15beae"
+          color= {Colors.heilightcolor}
         />
         <Text style={styles.locationtext}>school</Text>
-        {schoolChecked ? (
-          <FontAwesome5
-            name="check"
-            size={20}
-            color="#15beae"
-            onPress={() => toggleCheckbox('school')}
-          />
-        ) : (
-          <FontAwesome5
-            name="square"
-            size={20}
-            color="black"
-            onPress={() => toggleCheckbox('school')}
-          />
-        )}
+        
+         <CheckBox
+         isChecked={isChecked}
+         onClick={() => setChecked(!isChecked)}
+         checkedCheckBoxColor= {Colors.btn} 
+         uncheckedCheckBoxColor= {Colors.heilightcolor} 
+        style={{marginLeft: -7}}
+       />
       </View>
       <View style={{ flexDirection: 'row', alignItems: 'center',marginLeft: 14, }}>
         <FontAwesome5
           name="tree"
           size={15}
-          color="#15beae"
+          color= {Colors.heilightcolor}
         />
         <Text style={styles.locationtext}>Ground</Text>
-        {groundChecked ? (
-          <FontAwesome5
-            name="check"
-            size={20}
-            color="#15beae"
-            onPress={() => toggleCheckbox('ground')}
-          />
-        ) : (
-          <FontAwesome5
-            name="square"
-            size={20}
-            color="black"
-            onPress={() => toggleCheckbox('ground')}
-          />
-        )}
+        <CheckBox
+         isChecked={isChecked}
+         onClick={() => setChecked(!isChecked)}
+         checkedCheckBoxColor= {Colors.btn} 
+         uncheckedCheckBoxColor= {Colors.heilightcolor} 
+       />
       </View>
       <View style={{ flexDirection: 'row', alignItems: 'center',marginLeft: 14, }}>
         <FontAwesome5
           name="train"
           size={15}
-          color="#15beae"
+          color= {Colors.heilightcolor}
         />
         <Text style={styles.locationtext}>station</Text>
-        {stationChecked ? (
-          <FontAwesome5
-            name="check"
-            size={20}
-            color="#15beae"
-            onPress={() => toggleCheckbox('station')}
-          />
-        ) : (
-          <FontAwesome5
-            name="square"
-            size={20}
-            color="black"
-            onPress={() => toggleCheckbox('station')}
-          />
-        )}
+        <CheckBox
+         isChecked={isChecked}
+         onClick={() => setChecked(!isChecked)}
+         checkedCheckBoxColor= {Colors.btn} 
+         uncheckedCheckBoxColor= {Colors.heilightcolor} 
+         style={{marginLeft: -1}}
+       />
       </View>
     </View>
     <View style={styles.column}>
@@ -217,174 +291,93 @@ function Createnewproperty({ navigation }) {
 
       {currentSection === 'Amenities' && <View>
       <Text style={styles.headertableinternal}>External Facilities</Text>
-        <View style={styles.table}>
-                <View style={styles.row}>
-                  <View style={styles.column}>
+        <View style={[styles.table,{ alignItems: 'center', }]}>
+                <View style={[styles.row,{justifyContent: 'center',marginLeft: -12}]}>
+                  <View style={[styles.column,{alignItems: 'center',}]}>
                     <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 14, }}>
                       <Text style={styles.locationtext}>school</Text>
-                      {schoolChecked ? (
-                        <FontAwesome5
-                          name="check"
-                          size={20}
-                          color="#15beae"
-                          onPress={() => toggleCheckbox('school')}
-                        />
-                      ) : (
-                        <FontAwesome5
-                          name="square"
-                          size={20}
-                          color="black"
-                          onPress={() => toggleCheckbox('school')}
-                        />
-                      )}
+                      <CheckBox
+         isChecked={isChecked}
+         onClick={() => setChecked(!isChecked)}
+         checkedCheckBoxColor= {Colors.btn} 
+         uncheckedCheckBoxColor= {Colors.heilightcolor} 
+       />
                     </View>
                     <View style={{ flexDirection: 'row', alignItems: 'center',marginLeft: 14, }}>
                       <Text style={styles.locationtext}>Ground</Text>
-                      {groundChecked ? (
-                        <FontAwesome5
-                          name="check"
-                          size={20}
-                          color="#15beae"
-                          onPress={() => toggleCheckbox('ground')}
-                        />
-                      ) : (
-                        <FontAwesome5
-                          name="square"
-                          size={20}
-                          color="black"
-                          onPress={() => toggleCheckbox('ground')}
-                        />
-                      )}
+                      <CheckBox
+         isChecked={isChecked}
+         onClick={() => setChecked(!isChecked)}
+         checkedCheckBoxColor= {Colors.btn} 
+         uncheckedCheckBoxColor= {Colors.heilightcolor} 
+       />
                     </View>
                     <View style={{ flexDirection: 'row', alignItems: 'center',marginLeft: 14, }}>
                       <Text style={styles.locationtext}>station</Text>
-                      {stationChecked ? (
-                        <FontAwesome5
-                          name="check"
-                          size={20}
-                          color="#15beae"
-                          onPress={() => toggleCheckbox('station')}
-                        />
-                      ) : (
-                        <FontAwesome5
-                          name="square"
-                          size={20}
-                          color="black"
-                          onPress={() => toggleCheckbox('station')}
-                        />
-                      )}
+                      <CheckBox
+         isChecked={isChecked}
+         onClick={() => setChecked(!isChecked)}
+         checkedCheckBoxColor= {Colors.btn} 
+         uncheckedCheckBoxColor= {Colors.heilightcolor} 
+       />
                     </View>
                   </View>
-                  <View style={styles.column}>
+                  <View style={[styles.column,{alignItems: 'center'}]}>
                     <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 14, }}>
                       <Text style={styles.locationtext}>school</Text>
-                      {schoolChecked ? (
-                        <FontAwesome5
-                          name="check"
-                          size={20}
-                          color="#15beae"
-                          onPress={() => toggleCheckbox('school')}
-                        />
-                      ) : (
-                        <FontAwesome5
-                          name="square"
-                          size={20}
-                          color="black"
-                          onPress={() => toggleCheckbox('school')}
-                        />
-                      )}
+                      <CheckBox
+         isChecked={isChecked}
+         onClick={() => setChecked(!isChecked)}
+         checkedCheckBoxColor= {Colors.btn} 
+         uncheckedCheckBoxColor= {Colors.heilightcolor} 
+       />
                     </View>
                     <View style={{ flexDirection: 'row', alignItems: 'center',marginLeft: 14, }}>
                       <Text style={styles.locationtext}>Ground</Text>
-                      {groundChecked ? (
-                        <FontAwesome5
-                          name="check"
-                          size={20}
-                          color="#15beae"
-                          onPress={() => toggleCheckbox('ground')}
-                        />
-                      ) : (
-                        <FontAwesome5
-                          name="square"
-                          size={20}
-                          color="black"
-                          onPress={() => toggleCheckbox('ground')}
-                        />
-                      )}
+                      <CheckBox
+         isChecked={isChecked}
+         onClick={() => setChecked(!isChecked)}
+         checkedCheckBoxColor= {Colors.btn} 
+         uncheckedCheckBoxColor= {Colors.heilightcolor} 
+       />
                     </View>
                     <View style={{ flexDirection: 'row', alignItems: 'center',marginLeft: 14, }}>
                       <Text style={styles.locationtext}>station</Text>
-                      {stationChecked ? (
-                        <FontAwesome5
-                          name="check"
-                          size={20}
-                          color="#15beae"
-                          onPress={() => toggleCheckbox('station')}
-                        />
-                      ) : (
-                        <FontAwesome5
-                          name="square"
-                          size={20}
-                          color="black"
-                          onPress={() => toggleCheckbox('station')}
-                        />
-                      )}
+                      <CheckBox
+         isChecked={isChecked}
+         onClick={() => setChecked(!isChecked)}
+         checkedCheckBoxColor= {Colors.btn} 
+         uncheckedCheckBoxColor= {Colors.heilightcolor} 
+       />
                     </View>
                   </View>
-                  <View style={styles.column}>
+                  <View style={[styles.column,{alignItems: 'center'}]}>
                     <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 14, }}>
                       <Text style={styles.locationtext}>school</Text>
-                      {schoolChecked ? (
-                        <FontAwesome5
-                          name="check"
-                          size={20}
-                          color="#15beae"
-                          onPress={() => toggleCheckbox('school')}
-                        />
-                      ) : (
-                        <FontAwesome5
-                          name="square"
-                          size={20}
-                          color="black"
-                          onPress={() => toggleCheckbox('school')}
-                        />
-                      )}
+                      <CheckBox
+         isChecked={isChecked}
+         onClick={() => setChecked(!isChecked)}
+         checkedCheckBoxColor= {Colors.btn} 
+         uncheckedCheckBoxColor= {Colors.heilightcolor} 
+       />
                     </View>
                     <View style={{ flexDirection: 'row', alignItems: 'center',marginLeft: 14, }}>
                       <Text style={styles.locationtext}>Ground</Text>
-                      {groundChecked ? (
-                        <FontAwesome5
-                          name="check"
-                          size={20}
-                          color="#15beae"
-                          onPress={() => toggleCheckbox('ground')}
-                        />
-                      ) : (
-                        <FontAwesome5
-                          name="square"
-                          size={20}
-                          color="black"
-                          onPress={() => toggleCheckbox('ground')}
-                        />
-                      )}
+                      <CheckBox
+         isChecked={isChecked}
+         onClick={() => setChecked(!isChecked)}
+         checkedCheckBoxColor= {Colors.btn} 
+         uncheckedCheckBoxColor= {Colors.heilightcolor} 
+       />
                     </View>
                     <View style={{ flexDirection: 'row', alignItems: 'center',marginLeft: 14, }}>
                       <Text style={styles.locationtext}>station</Text>
-                      {stationChecked ? (
-                        <FontAwesome5
-                          name="check"
-                          size={20}
-                          color="#15beae"
-                          onPress={() => toggleCheckbox('station')}
-                        />
-                      ) : (
-                        <FontAwesome5
-                          name="square"
-                          size={20}
-                          color="black"
-                          onPress={() => toggleCheckbox('station')}
-                        />
-                      )}
+                      <CheckBox
+         isChecked={isChecked}
+         onClick={() => setChecked(!isChecked)}
+         checkedCheckBoxColor= {Colors.btn} 
+         uncheckedCheckBoxColor= {Colors.heilightcolor} 
+       />
                     </View>
                   </View>
                 </View>
@@ -393,173 +386,92 @@ function Createnewproperty({ navigation }) {
 
         <Text style={styles.headertableinternal}>Internal Facilities</Text>
 <View style={styles.table}>
-  <View style={styles.row}>
-    <View style={styles.column}>
+  <View style={[styles.row,{justifyContent: 'center',marginLeft: -12}]}>
+    <View style={[styles.column,{alignItems: 'center'}]}>
       <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 14, }}>
         <Text style={styles.locationtext}>school</Text>
-        {schoolChecked ? (
-          <FontAwesome5
-            name="check"
-            size={20}
-            color="#15beae"
-            onPress={() => toggleCheckbox('school')}
-          />
-        ) : (
-          <FontAwesome5
-            name="square"
-            size={20}
-            color="black"
-            onPress={() => toggleCheckbox('school')}
-          />
-        )}
+        <CheckBox
+         isChecked={isChecked}
+         onClick={() => setChecked(!isChecked)}
+         checkedCheckBoxColor= {Colors.btn} 
+         uncheckedCheckBoxColor= {Colors.heilightcolor} 
+       />
       </View>
       <View style={{ flexDirection: 'row', alignItems: 'center',marginLeft: 14, }}>
         <Text style={styles.locationtext}>Ground</Text>
-        {groundChecked ? (
-          <FontAwesome5
-            name="check"
-            size={20}
-            color="#15beae"
-            onPress={() => toggleCheckbox('ground')}
-          />
-        ) : (
-          <FontAwesome5
-            name="square"
-            size={20}
-            color="black"
-            onPress={() => toggleCheckbox('ground')}
-          />
-        )}
+        <CheckBox
+         isChecked={isChecked}
+         onClick={() => setChecked(!isChecked)}
+         checkedCheckBoxColor= {Colors.btn} 
+         uncheckedCheckBoxColor= {Colors.heilightcolor} 
+       />
       </View>
       <View style={{ flexDirection: 'row', alignItems: 'center',marginLeft: 14, }}>
         <Text style={styles.locationtext}>station</Text>
-        {stationChecked ? (
-          <FontAwesome5
-            name="check"
-            size={20}
-            color="#15beae"
-            onPress={() => toggleCheckbox('station')}
-          />
-        ) : (
-          <FontAwesome5
-            name="square"
-            size={20}
-            color="black"
-            onPress={() => toggleCheckbox('station')}
-          />
-        )}
+        <CheckBox
+         isChecked={isChecked}
+         onClick={() => setChecked(!isChecked)}
+         checkedCheckBoxColor= {Colors.btn} 
+         uncheckedCheckBoxColor= {Colors.heilightcolor} 
+       />
       </View>
     </View>
-    <View style={styles.column}>
+    <View style={[styles.column,{alignItems: 'center'}]}>
       <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 14, }}>
         <Text style={styles.locationtext}>school</Text>
-        {schoolChecked ? (
-          <FontAwesome5
-            name="check"
-            size={20}
-            color="#15beae"
-            onPress={() => toggleCheckbox('school')}
-          />
-        ) : (
-          <FontAwesome5
-            name="square"
-            size={20}
-            color="black"
-            onPress={() => toggleCheckbox('school')}
-          />
-        )}
+        <CheckBox
+         isChecked={isChecked}
+         onClick={() => setChecked(!isChecked)}
+         checkedCheckBoxColor= {Colors.btn} 
+         uncheckedCheckBoxColor= {Colors.heilightcolor} 
+       />
       </View>
       <View style={{ flexDirection: 'row', alignItems: 'center',marginLeft: 14, }}>
         <Text style={styles.locationtext}>Ground</Text>
-        {groundChecked ? (
-          <FontAwesome5
-            name="check"
-            size={20}
-            color="#15beae"
-            onPress={() => toggleCheckbox('ground')}
-          />
-        ) : (
-          <FontAwesome5
-            name="square"
-            size={20}
-            color="black"
-            onPress={() => toggleCheckbox('ground')}
-          />
-        )}
+        <CheckBox
+         isChecked={isChecked}
+         onClick={() => setChecked(!isChecked)}
+         checkedCheckBoxColor= {Colors.btn} 
+         uncheckedCheckBoxColor= {Colors.heilightcolor} 
+       />
       </View>
       <View style={{ flexDirection: 'row', alignItems: 'center',marginLeft: 14, }}>
         <Text style={styles.locationtext}>station</Text>
-        {stationChecked ? (
-          <FontAwesome5
-            name="check"
-            size={20}
-            color="#15beae"
-            onPress={() => toggleCheckbox('station')}
-          />
-        ) : (
-          <FontAwesome5
-            name="square"
-            size={20}
-            color="black"
-            onPress={() => toggleCheckbox('station')}
-          />
-        )}
+        <CheckBox
+         isChecked={isChecked}
+         onClick={() => setChecked(!isChecked)}
+         checkedCheckBoxColor= {Colors.btn} 
+         uncheckedCheckBoxColor= {Colors.heilightcolor} 
+       />
       </View>
     </View>
-    <View style={styles.column}>
+    <View style={[styles.column,{alignItems: 'center'}]}>
       <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 14, }}>
         <Text style={styles.locationtext}>school</Text>
-        {schoolChecked ? (
-          <FontAwesome5
-            name="check"
-            size={20}
-            color="#15beae"
-            onPress={() => toggleCheckbox('school')}
-          />
-        ) : (
-          <FontAwesome5
-            name="square"
-            size={20}
-            color="black"
-            onPress={() => toggleCheckbox('school')}
-          />
-        )}
+        <CheckBox
+         isChecked={isChecked}
+         onClick={() => setChecked(!isChecked)}
+         checkedCheckBoxColor= {Colors.btn} 
+         uncheckedCheckBoxColor= {Colors.heilightcolor} 
+       />
       </View>
       <View style={{ flexDirection: 'row', alignItems: 'center',marginLeft: 14, }}>
         <Text style={styles.locationtext}>Ground</Text>
-        {groundChecked ? (
-          <FontAwesome5
-            name="check"
-            size={20}
-            color="#15beae"
-            onPress={() => toggleCheckbox('ground')}
-          />
-        ) : (
-          <FontAwesome5
-            name="square"
-            size={20}
-            color="black"
-            onPress={() => toggleCheckbox('ground')}
-          />
-        )}
+        <CheckBox
+         isChecked={isChecked}
+         onClick={() => setChecked(!isChecked)}
+         checkedCheckBoxColor= {Colors.btn} 
+         uncheckedCheckBoxColor= {Colors.heilightcolor} 
+       />
       </View>
       <View style={{ flexDirection: 'row', alignItems: 'center',marginLeft: 14, }}>
         <Text style={styles.locationtext}>station</Text>
-        {stationChecked ? (
-          <FontAwesome5
-            name="check"
-            size={20}
-            color="#15beae"
-            onPress={() => toggleCheckbox('station')}
-          />
-        ) : (
-          <FontAwesome5
-            name="square"
-            size={20}
-            color="black"
-            onPress={() => toggleCheckbox('station')}
-          />
-        )}
+        <CheckBox
+         isChecked={isChecked}
+         onClick={() => setChecked(!isChecked)}
+         checkedCheckBoxColor= {Colors.btn} 
+         uncheckedCheckBoxColor= {Colors.heilightcolor} 
+       />
       </View>
     </View>
   </View>
@@ -686,7 +598,7 @@ function Createnewproperty({ navigation }) {
         </View></View>
       )}
 
-      <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+      <View style={{ flexDirection: 'row',position: "relative",alignItems: 'center', justifyContent: 'space-between' }}>
         <View style={{ marginBottom: 50 }}>
           <TouchableOpacity
             style={{
@@ -772,15 +684,13 @@ const styles = StyleSheet.create({
   },
   optionCardtopsearch: {
     height: 40,
-    width: 100,
+    width: 120,
     elevation: 5,
-    backgroundColor: "#15beae",
+    backgroundColor: Colors.heilightcolor,
     alignItems: 'center',
-    borderRadius: 7,
     marginTop: 10,
-    marginRight: 15,
     marginBottom: 10,
-    marginLeft: 5,
+    marginLeft: 0,
     paddingHorizontal: 10,
   },
   optionaddproperty: {
@@ -813,7 +723,7 @@ const styles = StyleSheet.create({
     color: 'black'
   },
   activeSection: {
-    backgroundColor: 'orange', // Change this to the desired color for the selected section
+    backgroundColor: Colors.btn,
   },
   locationtext:{
     fontSize: 18,
@@ -822,16 +732,73 @@ const styles = StyleSheet.create({
     width : 80,
   },
   headertable :{
-    textAlign: 'center',
-    fontSize : 20,
-    color: 'black'
-  },
-  headertableinternal :{
     // textAlign: 'center',
     fontSize : 20,
-    color: 'black'
+    color: 'black',
+    marginLeft: 10,
   },
-  
+  headertableinternal :{
+    fontSize : 20,
+    color: 'black',
+  },
+  textArea: {
+    height: 100,
+    textAlignVertical: 'top', 
+    borderBottomWidth: 1,  
+    borderWidth: 1,
+    borderColor: '#000', 
+    borderRadius: 10,
+  },
+  pickerContainer: {
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: '#000',
+    textAlignVertical: 'top', 
+    borderBottomWidth: 1, 
+    marginRight: 10,
+    marginLeft: 10
+  },
+   pickerContaine: {
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: '#000',
+    textAlignVertical: 'top', 
+    borderBottomWidth: 1,  
+    marginLeft: 10
+  },
+  picker: {
+    height: 50,
+    paddingHorizontal: 10,
+  },
+  containerpicker: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 16,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 15,
+  },
+  pickerWrapper: {
+    flex: 1,
+    marginRight: 16,
+  },
+  picker1: {
+    height: 50,
+    width: '110%',
+  },
+  overviewheading:{
+    fontSize: 18,
+    marginBottom: 7,
+    marginTop: 5,
+    color: 'black',
+  },
+    overviewheadin:{
+    fontSize: 18,
+    marginBottom: 7,
+    marginTop: 5,
+    color: 'black',
+    marginLeft: 10
+  }
 });
 
 const pickerSelectStyles = {
@@ -843,7 +810,7 @@ const pickerSelectStyles = {
     borderColor: 'gray',
     borderRadius: 4,
     color: 'black',
-    width: '100%', // Set the width to 100% to take the full width
+    width: '100%',
   },
   inputAndroid: {
     fontSize: 16,
@@ -853,7 +820,7 @@ const pickerSelectStyles = {
     borderColor: 'gray',
     borderRadius: 4,
     color: 'black',
-    width: '100%', // Set the width to 100% to take the full width
+    width: '100%', 
   },
 
 };

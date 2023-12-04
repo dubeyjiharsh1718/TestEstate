@@ -174,7 +174,7 @@ const SignupScreen = ({ navigation }) => {
           <Input
             placeholder={'Full Name'}
             leftIcon={<Ionicons name="person-outline" size={20} color={fullName ? Colors.heilightcolor : '#666'} />}
-            // onChangeText={handleFullNameChange}
+            //onChangeText={handleFullNameChange}
             containerStyle={styles.inputContainer}
           />
           <Text style={styles.errorText}>{fullNameError}</Text>

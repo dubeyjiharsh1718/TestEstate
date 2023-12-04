@@ -78,7 +78,7 @@ function PropertyListScreen({ navigation }) {
   };
   const renderBottomSheetContent = () => (
     <View style={[styles.bottomSheetContent, { height: height * 0.6 }]}>
-      <View style={styles.filtercontent}>
+       <View style={styles.filtercontent}>
       <Text style={styles.modaltext}>Bathrooms</Text>
       <View style={{ flexDirection: 'row', marginBottom: 10, }}>
         {buttons.map((button, index) => (
@@ -87,16 +87,16 @@ function PropertyListScreen({ navigation }) {
             title={button.title}
             type="outline"
             buttonStyle={{
-              width: 60,
-              padding: 5,
-              marginRight: 8,
+              width: width * 0.15,
+              padding: height * 0.006,
+              marginRight: width * 0.02,
               backgroundColor: selectedButtonIndex === index ? Colors.btn : 'white',
             }}
-            titleStyle={{ fontSize: 14, padding: 0, color: selectedButtonIndex === index ? 'white' : 'black' }}
+            titleStyle={{  fontSize: width * 0.04, padding: 0, color: selectedButtonIndex === index ? 'white' : 'black' }}
             onPress={() => handleButtonClick(index)}
           />
         ))}
-      </View ></View>
+      </View></View>
       <View style={styles.filtercontent}>
       <Text style={styles.modaltext}>Kitchens</Text>
       <View style={{ flexDirection: 'row', marginBottom: 10, }}>
@@ -106,12 +106,12 @@ function PropertyListScreen({ navigation }) {
             title={button.title}
             type="outline"
             buttonStyle={{
-              width: 60,
-              padding: 5,
-              marginRight: 8,
+              width: width * 0.15,
+              padding: height * 0.006,
+              marginRight: width * 0.02,
               backgroundColor: selectedButtonIndexkitchen === index ? Colors.btn : 'white',
             }}
-            titleStyle={{ fontSize: 14, padding: 0, color: selectedButtonIndexkitchen === index ? 'white' : 'black' }}
+            titleStyle={{  fontSize: width * 0.04, padding: 0, color: selectedButtonIndexkitchen === index ? 'white' : 'black' }}
             onPress={() => handleButtonClickkitchen(index)}
           />
         ))}
@@ -125,12 +125,12 @@ function PropertyListScreen({ navigation }) {
             title={button.title}
             type="outline"
             buttonStyle={{
-              width: 60,
-              padding: 5,
-              marginRight: 8,
+              width: width * 0.15,
+              padding: height * 0.006,
+              marginRight: width * 0.02,
               backgroundColor: selectedButtonIndexparking === index ? Colors.btn : 'white',
             }}
-            titleStyle={{ fontSize: 14, padding: 0, color: selectedButtonIndexparking === index ? 'white' : 'black' }}
+            titleStyle={{ fontSize: width * 0.04, padding: 0, color: selectedButtonIndexparking === index ? 'white' : 'black' }}
             onPress={() => handleButtonClickparking(index)}
           />
         ))}
@@ -144,12 +144,12 @@ function PropertyListScreen({ navigation }) {
             title={button.title}
             type="outline"
             buttonStyle={{
-              width: 70,
-              padding: 5,
-              marginRight: 8,
+              width: width * 0.17,
+              padding: height * 0.006,
+              marginRight: width * 0.02,
               backgroundColor: selectedButtonIndexcities === index ? Colors.btn : 'white',
             }}
-            titleStyle={{ fontSize: 14, padding: 0, color: selectedButtonIndexcities === index ? 'white' : 'black' }}
+            titleStyle={{ fontSize: width * 0.04, padding: 0, color: selectedButtonIndexcities === index ? 'white' : 'black' }}
             onPress={() => handleButtonClickcities(index)}
           />
         ))}
@@ -198,11 +198,11 @@ function PropertyListScreen({ navigation }) {
     {/* <Text style={styles.header}>Property Listings</Text> */}
     <View
                     style={{
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                        paddingHorizontal: 20,
-                        marginTop: 10,
-                        marginBottom: 10,
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      paddingHorizontal: width * 0.05,
+                      marginTop: height * 0.01,
+                      marginBottom: height * 0.01,
                     }}>
                     <View style={styles.searchInputContainer}>
                         <Icon name="search" size={25} color={Colors.heilightcolor} />
@@ -218,8 +218,7 @@ function PropertyListScreen({ navigation }) {
         animationIn="slideInUp"
         animationOut="slideOutDown"
         backdropOpacity={0.5}
-        style={{ padding: width * 0.05, margin: 0 }}
-      >
+        style={{ padding: width * 0.05, margin: 0 }}>
         {renderBottomSheetContent()}
       </Modal>
 
@@ -239,7 +238,7 @@ function PropertyListScreen({ navigation }) {
           </TouchableOpacity>
          
           
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 10 }}>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 10 }}>
             <Text style={{ fontSize: 15, fontWeight: 'bold', color: COLORS.dark, width: "65%" }} numberOfLines={1}>{item.name}</Text>
             <Text style={{ fontSize: 15, fontWeight: 'bold', color: COLORS.dark }}>
               Rs: <Text style={{ fontSize: 15, fontWeight: 'bold', color: "red" }}>{item.price}</Text>
@@ -286,7 +285,6 @@ const styles = StyleSheet.create({
   
   },
   card: {
-    marginTop: 5,
     height: 320,
     backgroundColor: COLORS.white,
     elevation: 10,
@@ -294,17 +292,15 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     padding: 15,
     borderRadius: 20,
+    marginTop: 1,
 },
   imageContainer: {
-    marginBottom: 12,
     alignItems: 'center',
   },
   propertyImage: {
-    width: 350, 
+    width: '100%',
     height: 180,
-    resizeMode: 'cover',
-    borderRadius: 8,
-    alignItems: 'center',
+    borderRadius: 15,
   },
   searchInputContainer: {
     backgroundColor: COLORS.light,

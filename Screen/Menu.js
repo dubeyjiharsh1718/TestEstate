@@ -22,13 +22,27 @@ const Action = ({ icon, title, screen,iconBackgroundColor }) => {
   )
 }
 
+
+
 export default function Menu({ navigation }) {
 
   var fullname = "Harsh Dubey";
   var useremail = "dubeyharsh@gmail.com";
   profileImage = require("../assets/images/house.jpg");
 
-
+  const navigateToOtherPage = () => {
+    navigation.navigate('RequestedProperty')
+    // , {
+    //   visitTime: {
+    //     selectedDate: selectedDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+    //   },
+    //   propertyData: {
+    //     image: property.image,
+    //     name: property.name,
+    //   },
+    //   messageRequest: messageRequest,
+    // });
+  };
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
       {/*  */}
@@ -75,6 +89,19 @@ export default function Menu({ navigation }) {
       <Action title={'Notifications'} icon={'notifications'} />
       <Action title={'Deactivation'} icon={'delete'} />
       <Action title={'Help & Support'} icon={'help'} />
+      <TouchableOpacity  onPress={() => navigateToOtherPage()}>
+  <View style={styles.action}>
+    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+      <View style={[styles.iconContainer, { backgroundColor: Colors.btn }]}>
+        <Feather name='user-plus' size={20} color={'white'} />
+      </View>
+      <Text style={[styles.actionTitle, { }]}>
+        Requested Property
+      </Text>
+    </View>
+  </View>
+</TouchableOpacity>
+
       <TouchableOpacity onPress={() => navigation.navigate("SavedProperty")}>
         <View style={styles.action}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -82,7 +109,7 @@ export default function Menu({ navigation }) {
             <AwesomeIcon name='heart' size={20} color={'white'} />
             </View>
             <Text style={[styles.actionTitle, { color: '#F25B68' }]}>
-              Saved Property
+              Liked Property
             </Text>
           </View>
         </View>

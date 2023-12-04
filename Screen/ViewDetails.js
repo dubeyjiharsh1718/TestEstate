@@ -15,7 +15,7 @@ import AwesomeIcon from 'react-native-vector-icons/FontAwesome5';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { ScrollView } from 'react-native-gesture-handler';
 import ImagePicker from 'react-native-image-crop-picker';
-
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 const ViewDetails = ({ route, navigation }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -28,6 +28,21 @@ const ViewDetails = ({ route, navigation }) => {
    const [editableState, setEditableState] = useState('Thane');
    const [editableDateofbirth, setEditableDateofbirth] = useState('01-05-2003');
    const [editableGender, setEditableGender] = useState('Male');
+   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+   const [selectedDate, setSelectedDate] = useState(new Date());
+   const [isDateEditing, setIsDateEditing] = useState(false);
+
+   const handleEditDate = () => {
+     setIsDateEditing(true);
+     setDatePickerVisibility(true);
+   };
+ 
+   const handleDateConfirm = (date) => {
+     setSelectedDate(date);
+     setIsDateEditing(false);
+     setDatePickerVisibility(false);
+   };
+
 
   const TostMessage = () => {
     ToastAndroid.show('Edited Successfully!', ToastAndroid.SHORT);
@@ -151,19 +166,45 @@ const ViewDetails = ({ route, navigation }) => {
             />
           </View>
         </View>
+   
         <View style={action ? styles.actionEditing : styles.action}>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <View style={[styles.iconContainer, {}]}>
-              <Feather name="calendar" size={25} style={{ color: Colors.heilightcolor }} />
-            </View>
-            <TextInput
-             style={isEditingStyle ? styles.actionEditing : styles.action}
-              value={editableDateofbirth}
-              onChangeText={(text) => setEditableDateofbirth(text)}
-              editable={isEditing}
-            />
-          </View>
-        </View>
+  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+    <TouchableOpacity >
+      <View style={[styles.iconContainer, {}]}>
+        <Feather
+          name="calendar"
+          size={25}
+          style={{ color: Colors.heilightcolor }}
+        />
+      </View>
+    </TouchableOpacity>
+    {isDateEditing ? (
+      <DateTimePickerModal
+        isVisible={isDatePickerVisible}
+        mode="date"
+        onConfirm={handleDateConfirm}
+        onCancel={() => setIsDateEditing(false)}
+      />
+    ) : (
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <Text
+          style={{ color: '#15273F', fontSize: 20, marginLeft: 19 }}
+          onPress={handleEditDate}
+        >
+          {selectedDate.getFullYear().toString()}
+        </Text>
+        <Text style={{ color: '#15273F', fontSize: 20 }}>
+          {' ' + selectedDate.toLocaleDateString([], { month: 'short' })}
+        </Text>
+        <Text style={{ color: '#15273F', fontSize: 20 }}>
+          {' ' + selectedDate.getDate().toString().padStart(2, '0')}
+        </Text>
+      </View>
+    )}
+  </View>
+</View>
+
+
         <View style={action ? styles.actionEditing : styles.action}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <View style={[styles.iconContainer, {}]}>
@@ -217,6 +258,12 @@ const ViewDetails = ({ route, navigation }) => {
           Personal information setting
         </Text>
       </View>
+      <DateTimePickerModal
+      isVisible={isDatePickerVisible}
+      mode="date"
+      onConfirm={handleDateConfirm}
+      onCancel={() => setDatePickerVisibility(false)}
+      />
     </ScrollView>
   );
 };
