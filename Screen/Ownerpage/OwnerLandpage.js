@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -15,6 +15,7 @@ import {
   Dimensions
 } from 'react-native';
 import { Button } from 'react-native-elements';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useBackHandler } from '@react-native-community/hooks';
 import { Modal } from 'react-native';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
@@ -28,6 +29,7 @@ const { width, height } = Dimensions.get('screen');
 
 const OwnerLanddpage = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
+  const [selectedLocation, setSelectedLocation] = useState('');
 
   const toggleModal = () => {
       setModalVisible(!modalVisible);
@@ -63,7 +65,22 @@ const OwnerLanddpage = ({ navigation }) => {
 
     useBackHandler(isFocused ? backActionHandler:()=>false);
 
+    useEffect(() => {
+      // Function to retrieve selected location from local storage
+      const getSelectedLocation = async () => {
+        try {
+          const storedLocation = await AsyncStorage.getItem('selectedLocationName');
+          if (storedLocation) {
+            setSelectedLocation(storedLocation);
+          }
+        } catch (error) {
+          console.error('Error retrieving data from local storage:', error);
+        }
+      };
   
+      // Call the function when the component mounts
+      getSelectedLocation();
+    }, []);
 
     
     const ListOptions = () => {
@@ -156,7 +173,7 @@ const OwnerLanddpage = ({ navigation }) => {
       <Text style={{ fontSize: 15,paddingLeft: 20  }}>Accept or Decline the request to let the buyer know about availability</Text>
      <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10,marginBottom: 10, backgroundColor: '#f9f9f9',
     elevation: 5,padding: 7, }}>
-  <Image source={require('../../assets/images/banlore.png')} style={{ width: 80, height: 80, marginRight: 10 }} />
+  <Image source={require('../../assets/images/bengaluru.png')} style={{ width: 80, height: 80, marginRight: 10 }} />
  <View style={{marginLeft: 10}}>
   <Text style={{color: 'black', fontSize: 18}}>Shivam Apt</Text>
   <Text style={{width: 200,}}>New DP Rd, Surya Nagar, Katrap, Badlapur, Maharashtra 421503</Text></View>
@@ -194,12 +211,12 @@ const OwnerLanddpage = ({ navigation }) => {
             />
             <View style={styles.header}>
                 <View style={{ flexDirection: 'row' }}>
-                    <View>
+                    <TouchableOpacity onPress={() => navigation.navigate("Selectlocation")}>
                     <AwesomeIcon name='map-marker-alt' size={26} style={{ color: Colors.iconcolor }} />
-                    </View>
+                    </TouchableOpacity>
                     <View>
                         <Text style={{ color: Colors.heilightcolor,marginLeft: 5, fontSize: 19, fontWeight: 'bold' }}>
-                            {location}
+                        {selectedLocation}
                         </Text>
                     </View>
                 </View>

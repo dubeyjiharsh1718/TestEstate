@@ -21,9 +21,9 @@ const showToast = (message) => {
 
 const SignupScreen = ({ navigation }) => {
 
-  const handleRegister = () => {
-    navigation.navigate('Home');
-  };
+  // const handleRegister = () => {
+  //   navigation.navigate('Home');
+  // };
 
   const [fullName, setFullName] = useState('');
   const [mobileNumber, setMobile] = useState('');
@@ -38,116 +38,115 @@ const SignupScreen = ({ navigation }) => {
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
 
-  // const handleFullNameChange = (text) => {
-  //   setFullName(text);
-  //   setFullNameError('');
-  // };
+   const handleFullNameChange = (text) => {
+    setFullName(text);
+    setFullNameError('');
+  };
 
-  // const handleMobileChange = (text) => {
-  //   setMobile(text);
-  //   setMobileError('');
-  // };
+   const handleMobileChange = (text) => {
+     setMobile(text);
+     setMobileError('');
+   };
 
-  // const handleEmailChange = (text) => {
-  //   setEmail(text);
-  //   setEmailError('');
-  // };
+   const handleEmailChange = (text) => {
+     setEmail(text);
+     setEmailError('');
+   };
 
-  // const handlePasswordChange = (text) => {
-  //   setPassword(text);
-  //   setPasswordError('');
-  // };
+   const handlePasswordChange = (text) => {
+     setPassword(text);
+     setPasswordError('');
+   };
 
-  // const handleImageClick = (image) => {
-  //   setSelectedImage(image);
-  // };
+   const handleImageClick = (image) => {
+     setSelectedImage(image);
+   };
 
-  // const handleNavigateLogin = () => {
-  //   navigation.navigate('Login');
-  // };
+   const handleNavigateLogin = () => {
+     navigation.navigate('Login');
+   };
 
-  // const handleRegister = async () => {
-  //   try {
+   const handleRegister = async () => {
+     try {
 
-  //     // Validate inputs
-  //     if (!fullName) {
-  //       setFullNameError('Full Name is required');
-  //       return;
-  //     }
+      //  Validate inputs
+       if (!fullName) {
+         setFullNameError('Full Name is required');
+         return;
+       }
 
-  //     if (!mobileNumber) {
-  //       setMobileError('Mobile Number is required');
-  //       return;
-  //     }
+       if (!mobileNumber) {
+         setMobileError('Mobile Number is required');
+         return;
+       }
 
-  //     if (!emailId) {
-  //       setEmailError('Email is required');
-  //       return;
-  //     }
+       if (!emailId) {
+         setEmailError('Email is required');
+         return;
+       }
 
-  //     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  //     if (!emailRegex.test(emailId)) {
-  //       setEmailError('Please enter a valid email address');
-  //       return;
-  //     }
+       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+       if (!emailRegex.test(emailId)) {
+         setEmailError('Please enter a valid email address');
+         return;
+       }
 
-  //     if (!password) {
-  //       setPasswordError('Password is required');
-  //       return;
-  //     }
+       if (!password) {
+         setPasswordError('Password is required');
+         return;
+       }
 
-  //     if (password.length < 6) {
-  //       setPasswordError('Password must be at least 6 characters long');
-  //       return;
-  //     }
+       if (password.length < 6) {
+         setPasswordError('Password must be at least 6 characters long');
+         return;
+       }
 
-  //     const userData = {
-  //       requestId: '12345',
-  //       requestData: {
-  //         fullName: fullName,
-  //         mobileNumber: mobileNumber,
-  //         emailId: emailId,
-  //         password: password,
-  //         role: selectedImage,
-  //         ownerId: null,
-  //       },
-  //     };
+       const userData = {
+         requestId: '12345',
+         requestData: {
+           fullName: fullName,
+           mobileNumber: mobileNumber,
+           emailId: emailId,
+           password: password,
+           role: selectedImage,
+           ownerId: null,
+         },
+       };
 
-  //     // Make API call
-  //       const response = await axios.post('https://hraprojectwa.azurewebsites.net/users/register', userData,{
-  //         // fullName,
-  //         // mobileNumber,
-  //         // emailId,
-  //         // password,
-  //         // role: selectedImage.toLowerCase(),
-  //         headers: {
-  //           'Content-Type': 'application/json',
-  //           accept: '*/*',
-  //         },
-  //       });
+       // Make API call
+         const response = await axios.post('https:hraprojectwa.azurewebsites.net/users/register', userData,{
+            fullName,
+            mobileNumber,
+            emailId,
+            password,
+            role: selectedImage.toLowerCase(),
+           headers: {
+             'Content-Type': 'application/json',
+             accept: '*/*',
+           },
+         });
       
-  //       console.log('API Response:', response.data);
-  //         if (response.data.success) {
-  //     showToast('Successfully registered');
-  //     const responseUserdata =  response.data.responseData;
-  //     const responseUserdataString = JSON.stringify(responseUserdata);
-  //     await AsyncStorage.setItem('responseUserdata', responseUserdataString);
-  //     navigation.navigate('EnterOtp');
-  //   } else {
-  //     showToast('Registration failed. Please try again.');
-  //   }
-  //       navigation.navigate('EnterOtp');
-  //     } catch (error) {
-  //       //console.error('API Error:', error.message);
-  //       // Log additional error details, if available
-  //        //console.error('API Error Details:', error.response?.data || 'No additional details available');
-  //         if (error.response?.data?.errorCode === 'ERR_0002') {
-  //     showToast('Mobile Number already exists');
-  //   } else {
-  //     showToast('An error occurred. Please try again.');
-  //   }
-  //     }
-  // };
+         console.log('API Response:', response.data);
+           if (response.data.success) {
+       showToast('Successfully registered');
+       const responseUserdata =  response.data.responseData;
+       const responseUserdataString = JSON.stringify(responseUserdata);
+       await AsyncStorage.setItem('responseUserdata', responseUserdataString);
+       navigation.navigate('EnterOtp');
+     } else {
+       showToast('Registration failed. Please try again.');
+     }
+         navigation.navigate('EnterOtp');
+       } catch (error) {
+         console.error('API Error:', error.message);
+          console.error('API Error Details:', error.response?.data || 'No additional details available');
+           if (error.response?.data?.errorCode === 'ERR_0002') {
+       showToast('Mobile Number already exists');
+     } else {
+       showToast('An error occurred. Please try again.');
+     }
+       }
+   };
 
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: 'white' }}>
@@ -174,7 +173,7 @@ const SignupScreen = ({ navigation }) => {
           <Input
             placeholder={'Full Name'}
             leftIcon={<Ionicons name="person-outline" size={20} color={fullName ? Colors.heilightcolor : '#666'} />}
-            //onChangeText={handleFullNameChange}
+            onChangeText={handleFullNameChange}
             containerStyle={styles.inputContainer}
           />
           <Text style={styles.errorText}>{fullNameError}</Text>
@@ -182,7 +181,7 @@ const SignupScreen = ({ navigation }) => {
           <Input
             placeholder={'Mobile'}
             leftIcon={<Ionicons name="call-outline" size={20} color={mobileNumber ? Colors.heilightcolor : '#666'} />}
-            // onChangeText={handleMobileChange}
+             onChangeText={handleMobileChange}
             containerStyle={styles.inputContainer}
           />
           <Text style={styles.errorText}>{mobileError}</Text>
@@ -191,7 +190,7 @@ const SignupScreen = ({ navigation }) => {
             placeholder={'Email ID'}
             leftIcon={<MaterialIcons name="alternate-email" size={20} color={emailId ? Colors.heilightcolor : '#666'} />}
             keyboardType="email-address"
-            // onChangeText={handleEmailChange}
+             onChangeText={handleEmailChange}
             containerStyle={styles.inputContainer}
           />
           <Text style={styles.errorText}>{emailError}</Text>
@@ -209,7 +208,7 @@ const SignupScreen = ({ navigation }) => {
               />
             }
             secureTextEntry={!showPassword}
-            // onChangeText={handlePasswordChange}
+             onChangeText={handlePasswordChange}
             containerStyle={styles.inputContainer}
           />
           <Text style={styles.errorText}>{passwordError}</Text>

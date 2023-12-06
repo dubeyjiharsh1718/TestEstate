@@ -192,6 +192,20 @@ const HomeScreen = ({ navigation }) => {
         />
         <Text style={{fontSize: 17, color: 'black'}}>{`Price Range: ${priceRange}`}</Text>
       </View>
+      <View>
+        <Text style={styles.modaltext}>Area Range</Text>
+        <Slider
+          value={priceRange}
+          minimumValue={0}
+          maximumValue={100}
+          step={1}
+          thumbTintColor="blue"
+          trackStyle={{ height: 10, backgroundColor: 'lightgrey' }}
+          thumbStyle={{ height: 20, width: 20, backgroundColor: 'blue' }}
+          onValueChange={(value) => setPriceRange(value)} // Update the priceRange state
+        />
+        <Text style={{fontSize: 17, color: 'black'}}>{`Price Range: ${priceRange}`}</Text>
+      </View>
       {/* <Pressable onPress={toggleBottomSheet}>
         <Text style={{ fontSize: 20 }}>Close Bottom Sheet</Text>
       </Pressable> */}

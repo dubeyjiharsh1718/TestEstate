@@ -1,10 +1,10 @@
-import { View, Text, Image, StyleSheet, SafeAreaView, Pressable,TouchableOpacity } from 'react-native'
+import { View, Text, Image, StyleSheet, SafeAreaView, Pressable,TouchableOpacity,Alert } from 'react-native'
 import React from 'react'
 import Icon from "react-native-vector-icons/MaterialIcons"
-import Feather from 'react-native-vector-icons/Feather'
-import { Surface } from 'react-native-paper'
+import Feather from 'react-native-vector-icons/Feather';
 import AwesomeIcon from 'react-native-vector-icons/FontAwesome5';
-import Colors from '../constants/Colors'
+import Colors from '../constants/Colors';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Action = ({ icon, title, screen,iconBackgroundColor }) => {
   return (
@@ -29,6 +29,31 @@ export default function Menu({ navigation }) {
   var fullname = "Harsh Dubey";
   var useremail = "dubeyharsh@gmail.com";
   profileImage = require("../assets/images/house.jpg");
+
+  const handleLogout = () => {
+    Alert.alert(
+      'Logout',
+      'Are you sure you want to logout?',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'Logout',
+          onPress: async () => {
+            try {
+              await AsyncStorage.removeItem('userLoggedIn');
+              navigation.navigate('Login');
+            } catch (error) {
+              console.error('Error clearing user data:', error.message);
+            }
+          },
+        },
+      ],
+      { cancelable: false }
+    );
+  };
 
   const navigateToOtherPage = () => {
     navigation.navigate('RequestedProperty')
@@ -116,7 +141,7 @@ export default function Menu({ navigation }) {
       </TouchableOpacity>
 
       {/*  */}
-      <Pressable onPress={() => navigation.navigate("Login")}>
+      <Pressable onPress={handleLogout}>
         <View style={styles.action}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <View style={[styles.iconContainer, { backgroundColor: '#15beae' }]}>

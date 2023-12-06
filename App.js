@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import SplashScreen from 'react-native-splash-screen';
 import LoginScreen from './Screen/LoginScreen';
 import WelcomeScreen from './Screen/WelcomeScreen';
 import SignupScreen from './Screen/SignupScreen';
@@ -28,9 +29,13 @@ import PropertyListScreen from './Screen/PropertyListScreen';
 const Stack = createStackNavigator();
 
 export default function App() {
+  useEffect(() => {
+    SplashScreen.hide();
+  }, []);
+
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="WelcomeScreen" screenOptions={{ headerShown: false }}>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="SignupScreen" component={SignupScreen} />
         <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />

@@ -1,36 +1,73 @@
-import { View, Text, Image, StyleSheet, SafeAreaView, Pressable } from 'react-native'
-import React from 'react'
-import Icon from "react-native-vector-icons/MaterialIcons"
-import Feather from 'react-native-vector-icons/Feather'
-import { Surface } from 'react-native-paper'
-import Colors from '../../constants/Colors'
+import React from 'react';
+import { View, Text, Image, StyleSheet, SafeAreaView, Pressable,Alert } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import Feather from 'react-native-vector-icons/Feather';
+import { Surface } from 'react-native-paper';
+import Colors from '../../constants/Colors';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const Action = ({ icon, title, screen,iconBackgroundColor  }) => {
+const Action = ({ icon, title, screen, iconBackgroundColor }) => {
   return (
     <View style={styles.action}>
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <View style={[styles.iconContainer, { backgroundColor: iconBackgroundColor || Colors.btn }]}>
           <Icon name={icon} size={23} color={'white'} />
         </View>
-        <Text style={styles.actionTitle}>
-          {title}
-        </Text>
+        <Text style={styles.actionTitle}>{title}</Text>
       </View>
       <Icon name={'chevron-right'} size={25} color={'#15273F'} />
     </View>
-  )
-}
+  );
+};
 
 export default function Profile({ navigation }) {
+  var fullname = 'Harsh Dubey';
+  var useremail = 'dubeyharsh@gmail.com';
+  const profileImage = require('../../assets/images/house.jpg');
 
-  var fullname = "Harsh Dubey";
-  var useremail = "dubeyharsh@gmail.com";
-  profileImage = require("../../assets/images/house.jpg");
-
+  const handleLogout = () => {
+    Alert.alert(
+      'Logout',
+      'Are you sure you want to logout?',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'Logout',
+          onPress: async () => {
+            try {
+              await AsyncStorage.removeItem('userLoggedIn');
+              navigation.navigate('Login');
+            } catch (error) {
+              console.error('Error clearing user data:', error.message);
+            }
+          },
+        },
+      ],
+      { cancelable: false }
+    );
+  };
+  
+  const backActionHandler = () => {
+    Alert.alert('', 'Are you sure to exit?', [
+      {
+        text: 'No',
+        onPress: () => null,
+        style: 'cancel',
+      },
+      {
+        text: 'Yes',
+        onPress: () => BackHandler.exitApp(),
+      },
+    ]);
+    return true;
+  };
+  
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
-      {/*  */}
       <Surface style={styles.header}>
         <View style={{ marginLeft: 20 }}>
           <Feather
@@ -53,21 +90,18 @@ export default function Profile({ navigation }) {
           </Pressable>
         </View>
       </Surface>
-      {/*  */}
-      
+
       <View style={styles.profileInfo}>
         <View style={styles.imageContainer}>
           <Image source={profileImage} style={styles.profileImageStyle} />
         </View>
         <View style={styles.nameSection}>
           <Text style={styles.accountTitle}>{fullname}</Text>
-          <Text style={{ fontFamily: "sans-serif-light", fontSize: 14, color: "gray" }}>{useremail}</Text>
+          <Text style={{ fontFamily: 'sans-serif-light', fontSize: 14, color: 'gray' }}>{useremail}</Text>
         </View>
       </View>
-      <View style={styles.action}></View>
-      
-      {/*  */}
-      <Pressable onPress={() => navigation.navigate("EditProfile")}>
+
+      <Pressable onPress={() => navigation.navigate('EditProfile')}>
         <View style={styles.action}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <View style={[styles.iconContainer, { backgroundColor: Colors.btn }]}>
@@ -80,8 +114,8 @@ export default function Profile({ navigation }) {
           <Icon name={'chevron-right'} size={25} color={'#15273F'} />
         </View>
       </Pressable>
-      {/*  */}
-      <Pressable onPress={() => navigation.navigate("Location")}>
+
+      <Pressable onPress={() => navigation.navigate('Location')}>
         <View style={styles.action}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <View style={[styles.iconContainer, { backgroundColor: Colors.btn }]}>
@@ -94,14 +128,12 @@ export default function Profile({ navigation }) {
           <Icon name={'chevron-right'} size={25} color={'#15273F'} />
         </View>
       </Pressable>
-       {/*  */}
-      {/* <Action title={'Edit Profile'} icon={'edit'} /> */}
-      <Action title={'Notifications'} icon={'notifications'}  />
+
+      <Action title={'Notifications'} icon={'notifications'} />
       <Action title={'Deactivation'} icon={'delete'} />
       <Action title={'Help & Support'} icon={'help'} />
 
-      {/*  */}
-      <Pressable onPress={() => navigation.navigate("Login")}>
+      <Pressable onPress={handleLogout}>
         <View style={styles.action}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <View style={[styles.iconContainer, { backgroundColor: Colors.heilightcolor }]}>
@@ -113,7 +145,6 @@ export default function Profile({ navigation }) {
           </View>
         </View>
       </Pressable>
-      {/*  */}
 
       <View style={{ marginTop: 50, justifyContent: 'center', alignItems: 'center' }}>
         <Text style={{ fontSize: 16, fontFamily: 'sans-serif-light' }}>Version: 0.0.1</Text>

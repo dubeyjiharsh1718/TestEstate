@@ -3,7 +3,7 @@ import { View, Text, FlatList, TouchableOpacity, Image, TextInput, StyleSheet, D
   Animated, } from 'react-native';
 import { Button } from 'react-native-elements';
 import AwesomeIcon from "react-native-vector-icons/FontAwesome5"
-import Icon from 'react-native-vector-icons/MaterialIcons'
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import COLORS from '../assets/const/colors'
 import { PinchGestureHandler, State } from 'react-native-gesture-handler';
 import Colors from '../constants/Colors';
@@ -78,7 +78,7 @@ function PropertyListScreen({ navigation }) {
   };
   const renderBottomSheetContent = () => (
     <View style={[styles.bottomSheetContent, { height: height * 0.6 }]}>
-       <View style={styles.filtercontent}>
+      <View style={styles.filtercontent}>
       <Text style={styles.modaltext}>Bathrooms</Text>
       <View style={{ flexDirection: 'row', marginBottom: 10, }}>
         {buttons.map((button, index) => (
@@ -87,16 +87,16 @@ function PropertyListScreen({ navigation }) {
             title={button.title}
             type="outline"
             buttonStyle={{
-              width: width * 0.15,
-              padding: height * 0.006,
-              marginRight: width * 0.02,
+              width: 60,
+              padding: 5,
+              marginRight: 8,
               backgroundColor: selectedButtonIndex === index ? Colors.btn : 'white',
             }}
-            titleStyle={{  fontSize: width * 0.04, padding: 0, color: selectedButtonIndex === index ? 'white' : 'black' }}
+            titleStyle={{ fontSize: 14, padding: 0, color: selectedButtonIndex === index ? 'white' : 'black' }}
             onPress={() => handleButtonClick(index)}
           />
         ))}
-      </View></View>
+      </View ></View>
       <View style={styles.filtercontent}>
       <Text style={styles.modaltext}>Kitchens</Text>
       <View style={{ flexDirection: 'row', marginBottom: 10, }}>
@@ -106,12 +106,12 @@ function PropertyListScreen({ navigation }) {
             title={button.title}
             type="outline"
             buttonStyle={{
-              width: width * 0.15,
-              padding: height * 0.006,
-              marginRight: width * 0.02,
+              width: 60,
+              padding: 5,
+              marginRight: 8,
               backgroundColor: selectedButtonIndexkitchen === index ? Colors.btn : 'white',
             }}
-            titleStyle={{  fontSize: width * 0.04, padding: 0, color: selectedButtonIndexkitchen === index ? 'white' : 'black' }}
+            titleStyle={{ fontSize: 14, padding: 0, color: selectedButtonIndexkitchen === index ? 'white' : 'black' }}
             onPress={() => handleButtonClickkitchen(index)}
           />
         ))}
@@ -125,12 +125,12 @@ function PropertyListScreen({ navigation }) {
             title={button.title}
             type="outline"
             buttonStyle={{
-              width: width * 0.15,
-              padding: height * 0.006,
-              marginRight: width * 0.02,
+              width: 60,
+              padding: 5,
+              marginRight: 8,
               backgroundColor: selectedButtonIndexparking === index ? Colors.btn : 'white',
             }}
-            titleStyle={{ fontSize: width * 0.04, padding: 0, color: selectedButtonIndexparking === index ? 'white' : 'black' }}
+            titleStyle={{ fontSize: 14, padding: 0, color: selectedButtonIndexparking === index ? 'white' : 'black' }}
             onPress={() => handleButtonClickparking(index)}
           />
         ))}
@@ -144,12 +144,12 @@ function PropertyListScreen({ navigation }) {
             title={button.title}
             type="outline"
             buttonStyle={{
-              width: width * 0.17,
-              padding: height * 0.006,
-              marginRight: width * 0.02,
+              width: 70,
+              padding: 5,
+              marginRight: 8,
               backgroundColor: selectedButtonIndexcities === index ? Colors.btn : 'white',
             }}
-            titleStyle={{ fontSize: width * 0.04, padding: 0, color: selectedButtonIndexcities === index ? 'white' : 'black' }}
+            titleStyle={{ fontSize: 14, padding: 0, color: selectedButtonIndexcities === index ? 'white' : 'black' }}
             onPress={() => handleButtonClickcities(index)}
           />
         ))}
@@ -157,6 +157,20 @@ function PropertyListScreen({ navigation }) {
 
       <View>
         <Text style={styles.modaltext}>Price Range</Text>
+        <Slider
+          value={priceRange}
+          minimumValue={0}
+          maximumValue={100}
+          step={1}
+          thumbTintColor="blue"
+          trackStyle={{ height: 10, backgroundColor: 'lightgrey' }}
+          thumbStyle={{ height: 20, width: 20, backgroundColor: 'blue' }}
+          onValueChange={(value) => setPriceRange(value)} // Update the priceRange state
+        />
+        <Text style={{fontSize: 17, color: 'black'}}>{`Price Range: ${priceRange}`}</Text>
+      </View>
+      <View>
+        <Text style={styles.modaltext}>Area Range</Text>
         <Slider
           value={priceRange}
           minimumValue={0}
