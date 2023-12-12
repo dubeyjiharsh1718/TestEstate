@@ -27,7 +27,8 @@ function Createnewproperty({ navigation }) {
 
 
   const [currentSection, setCurrentSection] = useState('Overview');
-  const [selectedSection, setSelectedSection] = useState('Overview'); 
+  const [selectedSection, setSelectedSection] = useState('Overview');
+  // const [selectedSection, setSelectedSection] = useState('Overview'); 
   const sections = ['Overview', 'Location', 'Amenities', 'Photo'];
 
 
@@ -42,8 +43,13 @@ function Createnewproperty({ navigation }) {
 
  
 
+  // const handleSectionClick = (section) => {
+  //   setCurrentSection(section);
+  // };
+
   const handleSectionClick = (section) => {
     setCurrentSection(section);
+    setSelectedSection(section);
   };
 
   const navigateToNextSection = () => {
@@ -51,6 +57,7 @@ function Createnewproperty({ navigation }) {
     if (currentIndex < sections.length - 1) {
       const nextSection = sections[currentIndex + 1];
       setCurrentSection(nextSection);
+      setSelectedSection(nextSection);
     }
   };
 
@@ -90,7 +97,7 @@ function Createnewproperty({ navigation }) {
                 selectedSection === section && styles.activeSection,
               ]}
             >
-              <Text style={{ marginTop: 6, fontSize: 18, color: 'white' }}>
+              <Text style={{ marginTop: 6, fontSize: 18, color: 'black' }}>
                 {section}
               </Text>
             </View>
@@ -295,89 +302,98 @@ function Createnewproperty({ navigation }) {
                 <View style={[styles.row,{justifyContent: 'center',marginLeft: -12}]}>
                   <View style={[styles.column,{alignItems: 'center',}]}>
                     <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 14, }}>
+                      <CheckBox
+         isChecked={isChecked}
+         onClick={() => setChecked(!isChecked)}
+         checkedCheckBoxColor= {Colors.btn} 
+         uncheckedCheckBoxColor= {Colors.heilightcolor} 
+       />
                       <Text style={styles.locationtext}>school</Text>
-                      <CheckBox
+                      
+                    </View>
+                    <View style={{ flexDirection: 'row', alignItems: 'center',marginLeft: 14, }}>
+                         <CheckBox
          isChecked={isChecked}
          onClick={() => setChecked(!isChecked)}
          checkedCheckBoxColor= {Colors.btn} 
          uncheckedCheckBoxColor= {Colors.heilightcolor} 
        />
-                    </View>
-                    <View style={{ flexDirection: 'row', alignItems: 'center',marginLeft: 14, }}>
                       <Text style={styles.locationtext}>Ground</Text>
-                      <CheckBox
-         isChecked={isChecked}
-         onClick={() => setChecked(!isChecked)}
-         checkedCheckBoxColor= {Colors.btn} 
-         uncheckedCheckBoxColor= {Colors.heilightcolor} 
-       />
+                   
                     </View>
                     <View style={{ flexDirection: 'row', alignItems: 'center',marginLeft: 14, }}>
-                      <Text style={styles.locationtext}>station</Text>
-                      <CheckBox
+                       <CheckBox
          isChecked={isChecked}
          onClick={() => setChecked(!isChecked)}
          checkedCheckBoxColor= {Colors.btn} 
          uncheckedCheckBoxColor= {Colors.heilightcolor} 
        />
+                      <Text style={styles.locationtext}>station</Text>
+                     
                     </View>
                   </View>
-                  <View style={[styles.column,{alignItems: 'center'}]}>
+                  <View style={[styles.column,{alignItems: 'center',}]}>
                     <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 14, }}>
+                      <CheckBox
+         isChecked={isChecked}
+         onClick={() => setChecked(!isChecked)}
+         checkedCheckBoxColor= {Colors.btn} 
+         uncheckedCheckBoxColor= {Colors.heilightcolor} 
+       />
                       <Text style={styles.locationtext}>school</Text>
-                      <CheckBox
+                      
+                    </View>
+                    <View style={{ flexDirection: 'row', alignItems: 'center',marginLeft: 14, }}>
+                         <CheckBox
          isChecked={isChecked}
          onClick={() => setChecked(!isChecked)}
          checkedCheckBoxColor= {Colors.btn} 
          uncheckedCheckBoxColor= {Colors.heilightcolor} 
        />
-                    </View>
-                    <View style={{ flexDirection: 'row', alignItems: 'center',marginLeft: 14, }}>
                       <Text style={styles.locationtext}>Ground</Text>
-                      <CheckBox
-         isChecked={isChecked}
-         onClick={() => setChecked(!isChecked)}
-         checkedCheckBoxColor= {Colors.btn} 
-         uncheckedCheckBoxColor= {Colors.heilightcolor} 
-       />
+                   
                     </View>
                     <View style={{ flexDirection: 'row', alignItems: 'center',marginLeft: 14, }}>
-                      <Text style={styles.locationtext}>station</Text>
-                      <CheckBox
+                       <CheckBox
          isChecked={isChecked}
          onClick={() => setChecked(!isChecked)}
          checkedCheckBoxColor= {Colors.btn} 
          uncheckedCheckBoxColor= {Colors.heilightcolor} 
        />
+                      <Text style={styles.locationtext}>station</Text>
+                     
                     </View>
                   </View>
-                  <View style={[styles.column,{alignItems: 'center'}]}>
+                 <View style={[styles.column,{alignItems: 'center',}]}>
                     <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 14, }}>
+                      <CheckBox
+         isChecked={isChecked}
+         onClick={() => setChecked(!isChecked)}
+         checkedCheckBoxColor= {Colors.btn} 
+         uncheckedCheckBoxColor= {Colors.heilightcolor} 
+       />
                       <Text style={styles.locationtext}>school</Text>
-                      <CheckBox
+                      
+                    </View>
+                    <View style={{ flexDirection: 'row', alignItems: 'center',marginLeft: 14, }}>
+                         <CheckBox
          isChecked={isChecked}
          onClick={() => setChecked(!isChecked)}
          checkedCheckBoxColor= {Colors.btn} 
          uncheckedCheckBoxColor= {Colors.heilightcolor} 
        />
-                    </View>
-                    <View style={{ flexDirection: 'row', alignItems: 'center',marginLeft: 14, }}>
                       <Text style={styles.locationtext}>Ground</Text>
-                      <CheckBox
-         isChecked={isChecked}
-         onClick={() => setChecked(!isChecked)}
-         checkedCheckBoxColor= {Colors.btn} 
-         uncheckedCheckBoxColor= {Colors.heilightcolor} 
-       />
+                   
                     </View>
                     <View style={{ flexDirection: 'row', alignItems: 'center',marginLeft: 14, }}>
-                      <Text style={styles.locationtext}>station</Text>
-                      <CheckBox
+                       <CheckBox
          isChecked={isChecked}
          onClick={() => setChecked(!isChecked)}
          checkedCheckBoxColor= {Colors.btn} 
          uncheckedCheckBoxColor= {Colors.heilightcolor} 
        />
+                      <Text style={styles.locationtext}>station</Text>
+                     
                     </View>
                   </View>
                 </View>
@@ -385,98 +401,107 @@ function Createnewproperty({ navigation }) {
         </View>
 
         <Text style={styles.headertableinternal}>Internal Facilities</Text>
-<View style={styles.table}>
-  <View style={[styles.row,{justifyContent: 'center',marginLeft: -12}]}>
-    <View style={[styles.column,{alignItems: 'center'}]}>
-      <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 14, }}>
-        <Text style={styles.locationtext}>school</Text>
-        <CheckBox
+     <View style={[styles.table,{ alignItems: 'center', }]}>
+                <View style={[styles.row,{justifyContent: 'center',marginLeft: -12}]}>
+                  <View style={[styles.column,{alignItems: 'center',}]}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 14, }}>
+                      <CheckBox
          isChecked={isChecked}
          onClick={() => setChecked(!isChecked)}
          checkedCheckBoxColor= {Colors.btn} 
          uncheckedCheckBoxColor= {Colors.heilightcolor} 
        />
-      </View>
-      <View style={{ flexDirection: 'row', alignItems: 'center',marginLeft: 14, }}>
-        <Text style={styles.locationtext}>Ground</Text>
-        <CheckBox
+                      <Text style={styles.locationtext}>school</Text>
+                      
+                    </View>
+                    <View style={{ flexDirection: 'row', alignItems: 'center',marginLeft: 14, }}>
+                         <CheckBox
          isChecked={isChecked}
          onClick={() => setChecked(!isChecked)}
          checkedCheckBoxColor= {Colors.btn} 
          uncheckedCheckBoxColor= {Colors.heilightcolor} 
        />
-      </View>
-      <View style={{ flexDirection: 'row', alignItems: 'center',marginLeft: 14, }}>
-        <Text style={styles.locationtext}>station</Text>
-        <CheckBox
+                      <Text style={styles.locationtext}>Ground</Text>
+                   
+                    </View>
+                    <View style={{ flexDirection: 'row', alignItems: 'center',marginLeft: 14, }}>
+                       <CheckBox
          isChecked={isChecked}
          onClick={() => setChecked(!isChecked)}
          checkedCheckBoxColor= {Colors.btn} 
          uncheckedCheckBoxColor= {Colors.heilightcolor} 
        />
-      </View>
-    </View>
-    <View style={[styles.column,{alignItems: 'center'}]}>
-      <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 14, }}>
-        <Text style={styles.locationtext}>school</Text>
-        <CheckBox
+                      <Text style={styles.locationtext}>station</Text>
+                     
+                    </View>
+                  </View>
+                  <View style={[styles.column,{alignItems: 'center',}]}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 14, }}>
+                      <CheckBox
          isChecked={isChecked}
          onClick={() => setChecked(!isChecked)}
          checkedCheckBoxColor= {Colors.btn} 
          uncheckedCheckBoxColor= {Colors.heilightcolor} 
        />
-      </View>
-      <View style={{ flexDirection: 'row', alignItems: 'center',marginLeft: 14, }}>
-        <Text style={styles.locationtext}>Ground</Text>
-        <CheckBox
+                      <Text style={styles.locationtext}>school</Text>
+                      
+                    </View>
+                    <View style={{ flexDirection: 'row', alignItems: 'center',marginLeft: 14, }}>
+                         <CheckBox
          isChecked={isChecked}
          onClick={() => setChecked(!isChecked)}
          checkedCheckBoxColor= {Colors.btn} 
          uncheckedCheckBoxColor= {Colors.heilightcolor} 
        />
-      </View>
-      <View style={{ flexDirection: 'row', alignItems: 'center',marginLeft: 14, }}>
-        <Text style={styles.locationtext}>station</Text>
-        <CheckBox
+                      <Text style={styles.locationtext}>Ground</Text>
+                   
+                    </View>
+                    <View style={{ flexDirection: 'row', alignItems: 'center',marginLeft: 14, }}>
+                       <CheckBox
          isChecked={isChecked}
          onClick={() => setChecked(!isChecked)}
          checkedCheckBoxColor= {Colors.btn} 
          uncheckedCheckBoxColor= {Colors.heilightcolor} 
        />
-      </View>
-    </View>
-    <View style={[styles.column,{alignItems: 'center'}]}>
-      <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 14, }}>
-        <Text style={styles.locationtext}>school</Text>
-        <CheckBox
+                      <Text style={styles.locationtext}>station</Text>
+                     
+                    </View>
+                  </View>
+                 <View style={[styles.column,{alignItems: 'center',}]}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 14, }}>
+                      <CheckBox
          isChecked={isChecked}
          onClick={() => setChecked(!isChecked)}
          checkedCheckBoxColor= {Colors.btn} 
          uncheckedCheckBoxColor= {Colors.heilightcolor} 
        />
-      </View>
-      <View style={{ flexDirection: 'row', alignItems: 'center',marginLeft: 14, }}>
-        <Text style={styles.locationtext}>Ground</Text>
-        <CheckBox
+                      <Text style={styles.locationtext}>school</Text>
+                      
+                    </View>
+                    <View style={{ flexDirection: 'row', alignItems: 'center',marginLeft: 14, }}>
+                         <CheckBox
          isChecked={isChecked}
          onClick={() => setChecked(!isChecked)}
          checkedCheckBoxColor= {Colors.btn} 
          uncheckedCheckBoxColor= {Colors.heilightcolor} 
        />
-      </View>
-      <View style={{ flexDirection: 'row', alignItems: 'center',marginLeft: 14, }}>
-        <Text style={styles.locationtext}>station</Text>
-        <CheckBox
+                      <Text style={styles.locationtext}>Ground</Text>
+                   
+                    </View>
+                    <View style={{ flexDirection: 'row', alignItems: 'center',marginLeft: 14, }}>
+                       <CheckBox
          isChecked={isChecked}
          onClick={() => setChecked(!isChecked)}
          checkedCheckBoxColor= {Colors.btn} 
          uncheckedCheckBoxColor= {Colors.heilightcolor} 
        />
-      </View>
-    </View>
-  </View>
+                      <Text style={styles.locationtext}>station</Text>
+                     
+                    </View>
+                  </View>
+                </View>
   
-</View>
+        </View>
         </View>}
 
 
@@ -598,35 +623,35 @@ function Createnewproperty({ navigation }) {
         </View></View>
       )}
 
-      <View style={{ flexDirection: 'row',position: "relative",alignItems: 'center', justifyContent: 'space-between' }}>
+<View style={{ flexDirection: 'row', position: "relative", alignItems: 'center', justifyContent: 'space-between' }}>
         <View style={{ marginBottom: 50 }}>
           <TouchableOpacity
             style={{
               backgroundColor: '#15273F',
               padding: 10,
               borderRadius: 10,
-              width: 100, 
+              width: 100,
               alignItems: 'center',
               justifyContent: 'center',
               flexDirection: 'row',
             }}
             onPress={navigateToPreviousSection}
           >
-            <Feather name="chevron-left" size={25} style={{ color: 'white',  }} />
+            <Feather name="chevron-left" size={25} style={{ color: 'white', }} />
             <Text style={{ color: 'white' }}>Previous</Text>
           </TouchableOpacity>
         </View>
         <View style={{ marginBottom: 50 }}>
           <TouchableOpacity
-              style={{
-                backgroundColor: '#15273F',
-                padding: 10,
-                borderRadius: 10,
-                width: 100, 
-                alignItems: 'center',
-                justifyContent: 'center',
-                flexDirection: 'row',
-              }}
+            style={{
+              backgroundColor: '#15273F',
+              padding: 10,
+              borderRadius: 10,
+              width: 100,
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexDirection: 'row',
+            }}
             onPress={navigateToNextSection}
           >
             <Text style={{ color: 'white' }}>Next</Text>
@@ -686,7 +711,8 @@ const styles = StyleSheet.create({
     height: 40,
     width: 120,
     elevation: 5,
-    backgroundColor: Colors.heilightcolor,
+    backgroundColor: 'white',
+    // color: 'black',
     alignItems: 'center',
     marginTop: 10,
     marginBottom: 10,
@@ -723,7 +749,7 @@ const styles = StyleSheet.create({
     color: 'black'
   },
   activeSection: {
-    backgroundColor: Colors.btn,
+    backgroundColor: Colors.heilightcolor,
   },
   locationtext:{
     fontSize: 18,

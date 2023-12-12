@@ -45,6 +45,10 @@ const OwnerLanddpage = ({ navigation }) => {
     };
     const handluploadpropertyPress = () => {
         navigation.navigate('Createnewproperty');
+      }; 
+
+      const handluptransaction = () => {
+        navigation.navigate('Transactiondetails');
       };
     const isFocused = useIsFocused();
 
@@ -96,41 +100,41 @@ const OwnerLanddpage = ({ navigation }) => {
                    style={styles.item}
                    onPress={handluploadpropertyPress}
                   >
-                  <Image source={require('../../assets/images/addproperty.jpg')} style={styles.image} />
-                  <Text>Add Property</Text>
+                  <Image source={require('../../assets/images/addproperti.png')} style={[styles.image,{height: 50}]} />
+                  <Text style={styles.addtext}>Add Property</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                    style={styles.item}
                    onPress={Addtenents}
                   >
                   <Image source={require('../../assets/images/Buy_a_home.webp')} style={styles.image} />
-                  <Text>Add Tenant</Text>
+                  <Text style={styles.addtext}>Add Tenant</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                    style={styles.item}
-                   
+                   onPress={handluptransaction}
                   >
-                  <Image source={require('../../assets/images/transaction.jpg')} style={styles.image} />
-                  <Text>Add Transaction</Text>
+                  <Image source={require('../../assets/images/addtransaction.jpg')} style={styles.image} />
+                  <Text style={styles.addtext}>Transaction</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                    style={styles.item}
                    onPress={toggleModal}
                   >
                   <Image source={require('../../assets/images/document.png')} style={styles.image} />
-                  <Text>Add Document</Text>
+                  <Text style={styles.addtext}>Add Document</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                    style={styles.item}
                   >
-                  <Image source={require('../../assets/images/report.png')} style={styles.image} />
-                  <Text>Report</Text>
+                  <Image source={require('../../assets/images/addreport.jpg')} style={styles.image} />
+                  <Text style={styles.addtext}>Report</Text>
                 </TouchableOpacity><TouchableOpacity
                    onPress={handlAlltenentPress}
                    style={styles.item}
                   >
-                  <Image source={require('../../assets/images/addproperty.jpg')} style={styles.image} />
-                  <Text>Tenent</Text>
+                  <Image source={require('../../assets/images/tenent.png')} style={styles.image} />
+                  <Text style={styles.addtext}>Tenent</Text>
                 </TouchableOpacity>
             </View>
             <View>
@@ -170,13 +174,13 @@ const OwnerLanddpage = ({ navigation }) => {
 
     <View style={[styles.bottomSheetContent, { height: height * 0.5 }]}>
       <Text style={{ fontSize: 20, color: 'black',paddingLeft:20,paddingBottom: 5, }}>Property Tour Request</Text>
-      <Text style={{ fontSize: 15,paddingLeft: 20  }}>Accept or Decline the request to let the buyer know about availability</Text>
+      <Text style={{ fontSize: 15,paddingLeft: 20,color: '#353535'  }}>Accept or Decline the request to let the buyer know about availability</Text>
      <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10,marginBottom: 10, backgroundColor: '#f9f9f9',
     elevation: 5,padding: 7, }}>
-  <Image source={require('../../assets/images/bengaluru.png')} style={{ width: 80, height: 80, marginRight: 10 }} />
+  <Image source={require('../../assets/images/house.jpg')} style={{ width: 80, height: 80, marginRight: 10 }} />
  <View style={{marginLeft: 10}}>
-  <Text style={{color: 'black', fontSize: 18}}>Shivam Apt</Text>
-  <Text style={{width: 200,}}>New DP Rd, Surya Nagar, Katrap, Badlapur, Maharashtra 421503</Text></View>
+  <Text style={{color: 'black', fontSize: 18,fontWeight: '700'}}>Shivam Apt</Text>
+  <Text style={{width: 200,color: '#353535'}}>New DP Rd, Surya Nagar, Katrap, Badlapur, Maharashtra 421503</Text></View>
 </View>
 
   
@@ -203,14 +207,14 @@ const OwnerLanddpage = ({ navigation }) => {
 
     return (
         <SafeAreaView
-            style={{ backgroundColor: COLORS.white, flex: 1 }}>
+            style={{ backgroundColor: COLORS.white, flex: 1, }}>
             <StatusBar
                 translucent={false}
                 backgroundColor={COLORS.white}
                 barStyle='dark-content'
             />
             <View style={styles.header}>
-                <View style={{ flexDirection: 'row' }}>
+                <View style={{ flexDirection: 'row', }}>
                     <TouchableOpacity onPress={() => navigation.navigate("Selectlocation")}>
                     <AwesomeIcon name='map-marker-alt' size={26} style={{ color: Colors.iconcolor }} />
                     </TouchableOpacity>
@@ -220,17 +224,15 @@ const OwnerLanddpage = ({ navigation }) => {
                         </Text>
                     </View>
                 </View>
-                <View style={{ flexDirection: 'row' }}>
-                    <View>
-                        <Text style={{ marginTop: 7, fontSize: 12, marginRight: 5, textAlign: 'right' }}>Welcome Back</Text>
-                        <Text style={{ fontSize: 16, fontweight: 'bold', marginRight: 5, textAlign: 'right', color: COLORS.dark }}>{PersonName}</Text>
-                    </View>
-                    <Pressable onPress={() => navigation.navigate("UserProfile")}>
-                        <View>
-                            <Image source={require("../../assets/images/house.jpg")} style={styles.profileImage} />
-                        </View>
-                    </Pressable>
-                </View>
+                <View>
+          <Text style={{ marginTop: 7, fontSize: 12, marginRight: 5, textAlign: 'right' }}>Welcome Back</Text>
+          <Text style={{ fontSize: 16, fontWeight: 'bold', marginRight: 5, textAlign: 'right', color: COLORS.dark }}>{PersonName}</Text>
+        </View>
+        <Pressable onPress={() => navigation.navigate("UserProfile")}>
+          <View>
+            <Image source={require("../../assets/images/house.jpg")} style={styles.profileImage} />
+          </View>
+        </Pressable>
             </View>
             <ScrollView showsVerticalScrollIndicator={false}>
                 <ListOptions />
@@ -255,29 +257,32 @@ const styles = StyleSheet.create({
         alignItems : 'center',
         justifyContent: 'space-between',
         paddingHorizontal: 20,
+        elevation: 4,
+        paddingTop: 5,
 
     },
     container: {
         flexDirection: 'row',
         flexWrap: 'wrap',
-         margin: 20,
+        margin: 10,
         justifyContent: 'center',
       },
       ownerLandpage:{
-        elevation: 4,
+        // elevation: 4,
         backgroundColor: COLORS.white,
-        margin: 10,
+        // margin: 10,
       },
       item: {
         width: '26%', 
-        margin: 8,
+        margin: 10,
+        marginBottom: 20,
         alignItems: 'center',
         elevation: 4,
         backgroundColor: COLORS.white,
         borderRadius: 10,
         paddingTop: 10,
         marginTop:10,
-        padding: 2,
+        padding: 4,
       },
       image: {
         width: '80%',
@@ -301,14 +306,14 @@ const styles = StyleSheet.create({
         fontSize: 16,
     },
     totalProperty: {
-        fontSize: 17, 
+        fontSize: 20, 
         color: 'white',
       },
       valueContainer: {
         marginLeft: 8,
       },
       value: {
-        fontSize: 17,
+        fontSize: 20,
         color: 'white'
       },
       containeroccupied :{
@@ -317,19 +322,19 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         marginLeft: 20,
         marginRight: 20,
-        marginBottom: 15,
+        marginBottom: 17,
         backgroundColor: 'orange',
-        padding : 8,
+        padding : 10,
       },
       containervacant:{
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        marginBottom: 15,
+        marginBottom: 17,
         marginLeft: 20,
         marginRight: 20,
         backgroundColor: '#00b3db',
-        padding : 8,
+        padding : 10,
       },
       containerproperty:{
         flexDirection: 'row',
@@ -337,9 +342,9 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         marginLeft: 20,
         marginRight: 20,
-        marginBottom: 15,
+        marginBottom: 17,
         backgroundColor: '#635cbb',
-        padding : 8,
+        padding : 10,
       },
       bottomSheetContent: {
         position: 'absolute',
@@ -359,11 +364,13 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
       },
       closemodalButton: {
-        // backgroundColor: Colors.btn,
         borderRadius: 10,
         height: 46,
-        // width: 320,
       },
+      addtext:{
+        color: '#353535'
+      },
+    
 
 });
 

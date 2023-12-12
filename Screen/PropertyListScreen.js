@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { View, Text, FlatList, TouchableOpacity, Image, TextInput, StyleSheet, Dimensions, Pressable,
   Animated, } from 'react-native';
-import { Button } from 'react-native-elements';
+  import {
+    Button,
+    Card as ElementsCard,
+  } from 'react-native-elements';
 import AwesomeIcon from "react-native-vector-icons/FontAwesome5"
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import COLORS from '../assets/const/colors'
@@ -156,7 +159,7 @@ function PropertyListScreen({ navigation }) {
       </View></View>
 
       <View>
-        <Text style={styles.modaltext}>Price Range</Text>
+        <Text style={styles.modaltextprice}>Price Range</Text>
         <Slider
           value={priceRange}
           minimumValue={0}
@@ -165,12 +168,12 @@ function PropertyListScreen({ navigation }) {
           thumbTintColor="blue"
           trackStyle={{ height: 10, backgroundColor: 'lightgrey' }}
           thumbStyle={{ height: 20, width: 20, backgroundColor: 'blue' }}
-          onValueChange={(value) => setPriceRange(value)} // Update the priceRange state
+          onValueChange={(value) => setPriceRange(value)}
         />
         <Text style={{fontSize: 17, color: 'black'}}>{`Price Range: ${priceRange}`}</Text>
       </View>
-      <View>
-        <Text style={styles.modaltext}>Area Range</Text>
+      <View style={{marginTop: 10}}>
+        <Text style={styles.modaltextprice}>Area Range</Text>
         <Slider
           value={priceRange}
           minimumValue={0}
@@ -179,7 +182,7 @@ function PropertyListScreen({ navigation }) {
           thumbTintColor="blue"
           trackStyle={{ height: 10, backgroundColor: 'lightgrey' }}
           thumbStyle={{ height: 20, width: 20, backgroundColor: 'blue' }}
-          onValueChange={(value) => setPriceRange(value)} // Update the priceRange state
+          onValueChange={(value) => setPriceRange(value)}
         />
         <Text style={{fontSize: 17, color: 'black'}}>{`Price Range: ${priceRange}`}</Text>
       </View>
@@ -242,8 +245,8 @@ function PropertyListScreen({ navigation }) {
       data={propertyData}
       keyExtractor={(item) => item.id}
       renderItem={({ item }) => (
-        <View
-          style={styles.card}
+        <ElementsCard
+        containerStyle={styles.card}
         >
           <TouchableOpacity style={styles.imageContainer}
            onPress={() => navigation.navigate('PropertyDetails', { property: item })}>
@@ -274,7 +277,8 @@ function PropertyListScreen({ navigation }) {
             </View>
           </View>
             {/* </View> */}
-        </View>
+           </ElementsCard>
+
       )}
       showsVerticalScrollIndicator={false}
       showsHorizontalScrollIndicator={false}
@@ -303,7 +307,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.white,
     elevation: 10,
     width: width - 40,
-    marginBottom: 20,
+    marginBottom: 35,
     padding: 15,
     borderRadius: 20,
     marginTop: 1,
@@ -362,6 +366,11 @@ modaltext:{
 color: 'black',
 marginBottom: 8,
 fontSize: 17,
+},
+modaltextprice:{
+  color: 'black',
+  marginTop: 5,
+  fontSize: 17,
 },
 
 });

@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useCallback  } from 'react';
 import { ScrollView, View, TouchableOpacity, StyleSheet, Alert, Image,ActivityIndicator  } from 'react-native';
 import { Text, Input, Button, Icon } from 'react-native-elements';
 import Spacing from "../constants/Spacing";
 import Colors from "../constants/Colors";
 import Font from "../constants/Font";
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { ToastAndroid } from 'react-native';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -16,6 +17,9 @@ const LoginScreen = ({ navigation }) => {
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [loading, setLoading] = useState(true); 
+  const [initialLoading, setInitialLoading] = useState(true);
+  const [loginLoading, setLoginLoading] = useState(false);
+  
 
   
   useEffect(() => {
@@ -31,7 +35,7 @@ const LoginScreen = ({ navigation }) => {
       50
     );
   };
-
+  
   const handleEmailChange = (text) => {
     setEmail(text);
     setEmailError('');
@@ -50,65 +54,72 @@ const LoginScreen = ({ navigation }) => {
     navigation.navigate('OwnerHome');
   };
 
-  const handleLogin = async () => {
-    try {
-      if (!email) {
-        setEmailError('Email or Mobile is required');
-        return;
+
+const handleLogin = async () => {
+  try {
+    setLoginLoading(true);
+    if (!email) {
+      setEmailError('Email or Mobile is required');
+      return;
+    }
+
+    if (!password) {
+      setPasswordError('Password is required');
+      return;
+    }
+
+    const loginData = {
+      requestId: '12345',
+      requestData: {
+        loginInput: email,
+        password: password,
+      },
+    };
+
+    const response = await axios.post('https://hraprojectwa.azurewebsites.net/users/login', loginData, {
+      headers: {
+        'Content-Type': 'application/json',
+        accept: '*/*',
+      },
+    });
+
+    await AsyncStorage.setItem('userLoggedIn', 'true');
+
+    console.log('Login API Response:', response.data);
+
+    if (response.data.success) {
+      const userRole = response.data?.responseData?.role;
+      if (userRole) {
+        await AsyncStorage.setItem('userRole', userRole);
       }
-  
-      if (!password) {
-        setPasswordError('Password is required');
-        return;
+
+      if (userRole === 'Owner') {
+        navigation.navigate('OwnerHome');
+      } else if (userRole === 'Tenent') {
+        navigation.navigate('Home');
       }
-  
-      const loginData = {
-        requestId: '12345',
-        requestData: {
-          loginInput: email,
-          password: password,
-        },
-      };
-  
-      const response = await axios.post('https://hraprojectwa.azurewebsites.net/users/login', loginData, {
-        headers: {
-          'Content-Type': 'application/json',
-          accept: '*/*',
-        },
-      });
-  
-      await AsyncStorage.setItem('userLoggedIn', 'true');
-  
-      console.log('Login API Response:', response.data);
-  
-      if (response.data.success) {
-        const userRole = response.data?.responseData?.role;
-        if (userRole) {
-          await AsyncStorage.setItem('userRole', userRole);
-        }
-  
-        if (userRole === 'Owner') {
-          navigation.navigate('OwnerHome');
-        } else if (userRole === 'Tenent') {
-          navigation.navigate('Home');
-        }
-        Toast.show({
-          type: 'success',
-          text1: 'Success',
-          text2: 'Successfully logged in!',
-        });
+
+      showToast('Successfully logged in!');
+    } else {
+      if (response.data.errorCode === 'ERR_WRONG_PASSWORD') {
+        showToast('Incorrect password. Please try again.');
       } else {
         showToast('Login failed. Please check your credentials.');
       }
-    } catch (error) {
-      console.error('Login API Error:', error.message);
-      if (error.response?.data?.errorCode === 'ERR_0001') {
-        showToast('Invalid credentials. Please try again.');
-      } else {
-        showToast('An error occurred. Please try again.');
-      }
     }
-  };
+  } catch (error) {
+    console.error('Login API Error:', error.message);
+    if (error.response?.data?.errorCode === 'ERR_0001') {
+      showToast('Invalid credentials. Please try again.');
+    } else {
+      showToast('Incorrect email address or password.');
+    }
+  } finally {
+    setLoginLoading(false);
+  }
+};
+
+
   
 
   const checkUserLogin = async () => {
@@ -126,17 +137,17 @@ const LoginScreen = ({ navigation }) => {
       console.error('Check User Login Error:', error.message);
     }
       finally {
-        setLoading(false);
+        setInitialLoading(false);
       }
     };
   
-    if (loading) {
-      return (
-        <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color={Colors.btn} />
-        </View>
+     if (initialLoading) {
+       return (
+         <View style={styles.loadingContainer}>
+         <ActivityIndicator size="large" color={Colors.btn} />
+         </View>
       );
-    }
+     }
 
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={{ backgroundColor: 'white' }}>
@@ -179,7 +190,10 @@ const LoginScreen = ({ navigation }) => {
             <Text style={styles.ForgotpassText}>Forgot your password?</Text>
           </TouchableOpacity>
 
-          <Button title={'Login'} onPress={handleLogin} buttonStyle={styles.registerButton} />
+          {loginLoading  && (
+          <ActivityIndicator size="large" color="#0000ff" style={{ marginTop: 10,marginBottom: 10 }} />
+          )}
+          <Button title={'Login'} onPress={handleLogin} buttonStyle={styles.registerButton}  disabled={loginLoading} />
 
           <View style={{ flexDirection: 'row', justifyContent: 'center', marginBottom: 20, marginTop: 6 }}>
             <Text>Don't have an account?</Text>

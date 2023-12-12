@@ -7,6 +7,7 @@ import {
   Image,
 } from 'react-native';
 import { Text, Input } from 'react-native-elements';
+import { ToastAndroid } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Spacing from '../constants/Spacing';
 import FontSize from '../constants/FontSize';
@@ -19,6 +20,18 @@ export default function VerifyWith() {
   const navigation = useNavigation();
   const [inputValue, setInputValue] = useState('');
   const [inputError, setInputError] = useState('');
+
+
+  const showToast = (message) => {
+    ToastAndroid.showWithGravityAndOffset(
+      message,
+      ToastAndroid.LONG,
+      ToastAndroid.BOTTOM,
+      25,
+      50
+    );
+  };
+
 
   const handleInputChange = (text) => {
     setInputValue(text);
@@ -33,28 +46,27 @@ export default function VerifyWith() {
           { userInput: inputValue },
           {
             headers: {
-              accept: '*/*' 
-              
+              accept: '*/*',
             },
           }
         );
-
+  
         if (response.status === 200) {
           navigation.navigate('EnterOtpNewPass');
         } else {
           const errorData = response.data;
           console.error('API Error:', errorData);
-          setInputError(errorData.message || 'An error occurred during the API call.');
+          showToast(errorData.message || 'An error occurred during the API call.');
         }
       } catch (error) {
         console.error('Error during API call:', error);
-        setInputError('An unexpected error occurred.');
+        showToast('An unexpected error occurred.');
       }
     }
   };
+  
 
   const validateInput = (input) => {
-    // Validation logic for either mobile number or email ID
     const mobileRegex = /^[0-9]{10}$/;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -88,7 +100,7 @@ export default function VerifyWith() {
             onChangeText={handleInputChange}
             containerStyle={styles.inputContainer}
             errorMessage={inputError}
-            placeholderTextColor={Colors.heilightcolor}
+            // placeholderTextColor={Colors.heilightcolor}
           />
         </View>
 

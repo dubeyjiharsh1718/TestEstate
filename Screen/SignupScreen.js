@@ -67,9 +67,8 @@ const SignupScreen = ({ navigation }) => {
    };
 
    const handleRegister = async () => {
+    
      try {
-
-      //  Validate inputs
        if (!fullName) {
          setFullNameError('Full Name is required');
          return;
@@ -128,16 +127,16 @@ const SignupScreen = ({ navigation }) => {
       
          console.log('API Response:', response.data);
            if (response.data.success) {
-       showToast('Successfully registered');
-       const responseUserdata =  response.data.responseData;
-       const responseUserdataString = JSON.stringify(responseUserdata);
-       await AsyncStorage.setItem('responseUserdata', responseUserdataString);
-       navigation.navigate('EnterOtp');
-     } else {
-       showToast('Registration failed. Please try again.');
-     }
+          showToast('Successfully registered');
+          const responseUserdata =  response.data.responseData;
+          const responseUserdataString = JSON.stringify(responseUserdata);
+          await AsyncStorage.setItem('responseUserdata', responseUserdataString);
+          navigation.navigate('EnterOtp');
+          } else {
+            showToast('Registration failed. Please try again.');
+          }
          navigation.navigate('EnterOtp');
-       } catch (error) {
+         } catch (error) {
          console.error('API Error:', error.message);
           console.error('API Error Details:', error.response?.data || 'No additional details available');
            if (error.response?.data?.errorCode === 'ERR_0002') {
@@ -221,10 +220,10 @@ const SignupScreen = ({ navigation }) => {
 
           <View style={{ flexDirection: 'row', justifyContent: 'center', marginBottom: 20, marginTop: 10 }}>
             <Text>Already registered?</Text>
-            {/* <Text onPress={handleNavigateLogin} style={{ color: Colors.heilightcolor, fontWeight: '650' }}>
+             <Text onPress={handleNavigateLogin} style={{ color: Colors.heilightcolor, fontWeight: '650' }}>
               {' '}
               Login
-            </Text> */}
+            </Text> 
           </View>
 
           <Text style={{ textAlign: 'center', color: '#666', marginBottom: 20 }}>

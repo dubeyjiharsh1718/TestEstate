@@ -1,21 +1,13 @@
 import React, { useState } from 'react';
 import {
-  SafeAreaView,
-  StyleSheet,
-  StatusBar,
-  BackHandler,
-  TextInput,
-  ScrollView,
-  TouchableOpacity,
-  Image,
-  View,
-  Text,
-  Alert,
+  SafeAreaView, StyleSheet, StatusBar, BackHandler, TextInput, ScrollView, TouchableOpacity,
+ Image,View,Text,Alert,Pressable
 } from 'react-native';
-import { useBackHandler } from '@react-native-community/hooks';
 import { useIsFocused } from '@react-navigation/native';
 import COLORS from '../../assets/const/colors';
 import Colors from '../../constants/Colors';
+import { Surface } from 'react-native-paper';
+import Feather from 'react-native-vector-icons/Feather';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const Selectlocation = ({ navigation }) => {
@@ -32,25 +24,8 @@ const Selectlocation = ({ navigation }) => {
       Alert.alert('Select Image', 'Please select an image before submitting.');
     }
   };
-  // const BackHandler = () => {
-  //   navigation.navigate('EnterOtp');
-  // };
+  
   const isFocused = useIsFocused();
-
-  // function backActionHandler() {
-  //   Alert.alert('', 'Are you sure to exit ?', [
-  //     {
-  //       text: 'No',
-  //       onPress: () => null,
-  //       style: 'cancel',
-  //     },
-  //     {
-  //       text: 'Yes',
-  //       onPress: () => BackHandler.exitApp(),
-  //     },
-  //   ]);
-  //   return true;
-  // }
 
 
 
@@ -74,20 +49,19 @@ const Selectlocation = ({ navigation }) => {
       <ScrollView>
         <View style={styles.ownerLandpage}>
 
-          
-          {/* <View style={{ alignItems: 'center', marginTop: 10, elevation: 4 }}>
-            <Image
-              source={require('../../assets/images/Selectimagebanner.jpg')}
-              style={styles.imagebanner}
-            />
-          </View> */}
             <View style={styles.searchInputContainer}>
                         <Icon name="search" size={25} color={Colors.heilightcolor} />
                         <TextInput placeholder='Search address, city, location' />
             </View>
-            <Text style={{color: 'red',fontSize: 18,paddingLeft: 20, paddingTop: 8, paddingBottom: 8, backgroundColor: 'white'}}>Detect my location</Text>
+            <TouchableOpacity>
+            <View style={{flexDirection: 'row',color: 'red',fontSize: 18,paddingLeft: 20, paddingTop: 8, paddingBottom: 8, backgroundColor: 'white'}}>
+            <Icon name="near-me" size={25} color={Colors.heilightcolor} />
+           <Text style={{color: 'red',fontSize: 18,paddingLeft: 10,backgroundColor: 'white'}}>Detect my location</Text>
+           
+            </View></TouchableOpacity>
           <Text style={{color: 'black', marginLeft: 20,paddingTop: 10, paddingBottom: 10, }}>POPULAR CITIES</Text>
-          <View style={styles.container}>
+        
+            <View style={styles.container}>
             {locations.map((location, index) => (
               <TouchableOpacity
                 key={index}
@@ -103,6 +77,7 @@ const Selectlocation = ({ navigation }) => {
             ))}
           </View>
           <Text style={{color: '', marginLeft: 20,paddingTop: 10, paddingBottom: 10, }}>OTHER CITIES</Text>
+          
           <Text style={{color: 'black',fontSize: 18,marginBottom:2 ,paddingLeft: 20, paddingTop: 8, paddingBottom: 8, backgroundColor: 'white'}}>Thane</Text>
           <Text style={{color: 'black',fontSize: 18,marginBottom:2 ,paddingLeft: 20, paddingTop: 8, paddingBottom: 8, backgroundColor: 'white'}}>Kalyan</Text>
           <Text style={{color: 'black',fontSize: 18,marginBottom:2 ,paddingLeft: 20, paddingTop: 8, paddingBottom: 8, backgroundColor: 'white'}}>Ambarnath</Text>
@@ -122,6 +97,28 @@ const Selectlocation = ({ navigation }) => {
         backgroundColor={COLORS.white}
         barStyle='dark-content'
       />
+           <Surface style={styles.header}>
+        <View style={{ marginLeft: 20 }}>
+          <Feather
+            name='arrow-left'
+            size={25}
+            style={{ color: '#15273F' }}
+            onPress={navigation.goBack}
+          />
+        </View>
+        <View style={{ flex: 1, alignItems: 'center' }}>
+          <Text style={styles.headerText}>Select Location</Text>
+        </View>
+        <View style={{ marginRight: 20 }}>
+          <Pressable onPress={() => console.log('Share button pressed')}>
+            <Feather
+              name=''
+              size={25}
+              style={{ color: '#15273F' }}
+            />
+          </Pressable>
+        </View>
+      </Surface>
       <ScrollView showsVerticalScrollIndicator={false}>
         <ListOptions />
       </ScrollView>
@@ -139,12 +136,23 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     backgroundColor: 'white',
-    //margin: 20,
    justifyContent: 'center',
   },
   ownerLandpage: {
     backgroundColor: '#f9f9f9',
-    // margin: 10,
+  },
+  header: {
+    height: 50,
+    elevation: 4,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    flexDirection: 'row',
+    backgroundColor: 'white',
+  },
+  headerText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#15273F'
   },
   item: {
     width: '24%',
@@ -152,9 +160,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     elevation: 1,
     backgroundColor: COLORS.white,
-    // borderRadius: 5,
     paddingTop: 10,
-    // marginTop: 10,
     padding: 7,
   },
   selectedItem: {

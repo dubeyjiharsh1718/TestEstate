@@ -57,45 +57,12 @@ export default function Menu({ navigation }) {
 
   const navigateToOtherPage = () => {
     navigation.navigate('RequestedProperty')
-    // , {
-    //   visitTime: {
-    //     selectedDate: selectedDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-    //   },
-    //   propertyData: {
-    //     image: property.image,
-    //     name: property.name,
-    //   },
-    //   messageRequest: messageRequest,
-    // });
   };
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
-      {/*  */}
-      {/* <Surface style={styles.header}>
-        <View style={{ marginLeft: 20 }}>
-          <Feather
-            name='arrow-left'
-            size={25}
-            style={{ color: '#15273F' }}
-            onPress={navigation.goBack}
-          />
-        </View>
-        <View style={{}}>
-          <Text style={styles.headerText}>Account</Text>
-        </View>
-        <View style={{ marginRight: 20 }}>
-          <Pressable>
-            <Feather
-              name='share-2'
-              size={25}
-              style={{ color: '#15273F' }}
-            />
-          </Pressable>
-        </View>
-      </Surface> */}
-      {/*  */}
+     
       
-      <View style={styles.profileInfo}>
+      <TouchableOpacity onPress={() => navigation.navigate("ViewDetails")}  style={styles.profileInfo}>
         <View style={styles.imageContainer}>
           <Image source={profileImage} style={styles.profileImageStyle} />
         </View>
@@ -103,13 +70,8 @@ export default function Menu({ navigation }) {
           <Text style={styles.accountTitle}>{fullname}</Text>
           <Text style={{ fontFamily: "sans-serif-light", fontSize: 14, color: "gray" }}>{useremail}</Text>
         </View>
-      </View>
+      </TouchableOpacity>
       <View style={styles.action}></View>
-      
-      {/*  */}
-      
-      
-      {/* <Action title={'Edit Profile'} icon={'edit'} /> */}
       <Action title={'Location'} icon={'edit-location'} />
       <Action title={'Notifications'} icon={'notifications'} />
       <Action title={'Deactivation'} icon={'delete'} />
@@ -179,14 +141,17 @@ const styles = StyleSheet.create({
     color: '#15273F'
   },
   profileInfo: {
-    marginTop: 10,
+    // marginTop: 10,
     paddingHorizontal: 29,
+    paddingTop: 10,
+    paddingBottom: 10,
     flexDirection: 'row',
     alignItems: 'center',
-
+    backgroundColor: "#f7f7f7",
+    elevation: 3,
   },
   imageContainer: {
-    marginTop: 20,
+    // marginTop: 20,
     width: 70,
     height: 70,
     borderRadius: 60,

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, SafeAreaView, Pressable,Alert } from 'react-native';
+import { View, Text, Image, StyleSheet, SafeAreaView, Pressable,Alert,TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Feather from 'react-native-vector-icons/Feather';
 import { Surface } from 'react-native-paper';
@@ -68,7 +68,7 @@ export default function Profile({ navigation }) {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
-      <Surface style={styles.header}>
+      {/* <Surface style={styles.header}>
         <View style={{ marginLeft: 20 }}>
           <Feather
             name='arrow-left'
@@ -89,17 +89,17 @@ export default function Profile({ navigation }) {
             />
           </Pressable>
         </View>
-      </Surface>
+      </Surface> */}
 
-      <View style={styles.profileInfo}>
+      <TouchableOpacity onPress={() => navigation.navigate("ViewDetails")}  style={styles.profileInfo}>
         <View style={styles.imageContainer}>
           <Image source={profileImage} style={styles.profileImageStyle} />
         </View>
         <View style={styles.nameSection}>
           <Text style={styles.accountTitle}>{fullname}</Text>
-          <Text style={{ fontFamily: 'sans-serif-light', fontSize: 14, color: 'gray' }}>{useremail}</Text>
+          <Text style={{ fontFamily: "sans-serif-light", fontSize: 14, color: "gray" }}>{useremail}</Text>
         </View>
-      </View>
+      </TouchableOpacity>
 
       <Pressable onPress={() => navigation.navigate('EditProfile')}>
         <View style={styles.action}>
@@ -170,15 +170,19 @@ const styles = StyleSheet.create({
     color: '#15273F'
   },
   profileInfo: {
-    marginTop: 10,
+    // marginTop: 10,
     paddingHorizontal: 29,
+    paddingTop: 10,
+    paddingBottom: 10,
     flexDirection: 'row',
     alignItems: 'center',
-
+    backgroundColor: "#f7f7f7",
+    elevation: 3,
   },
   imageContainer: {
-    width: 120,
-    height: 120,
+    // marginTop: 20,
+    width: 70,
+    height: 70,
     borderRadius: 60,
     backgroundColor: '#f6f6f6',
     justifyContent: 'center',
@@ -186,8 +190,8 @@ const styles = StyleSheet.create({
 
   },
   profileImageStyle: {
-    height: 115,
-    width: 115,
+    height: 70,
+    width: 70,
     borderRadius: 60,
   },
   accountTitle: {

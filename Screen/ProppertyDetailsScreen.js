@@ -275,9 +275,9 @@ const handleRequestProperty = async () => {
       >
         <View style={styles.overlay} />
         <View style={[styles.bottomSheetContent, { height: height * 0.4 }]}>
-        <Text style={{ fontSize: 20, color: 'black' }}>
-        Date for Visit -
-        <Text style={{ color: Colors.heilightcolor }}>
+        <Text style={{ fontSize: 20, color: 'black',marginBottom: 10 }}>
+        Date for Visit  -
+        <Text style={{ color: Colors.heilightcolor,}}>
           {selectedDate.getFullYear().toString()}
         </Text>
         <Text style={{ color: Colors.heilightcolor }}>
@@ -288,8 +288,8 @@ const handleRequestProperty = async () => {
         </Text>
       </Text>
 
-          <Text style={{ fontSize: 20, color: 'black' }}>
-            Time for Visit - 
+          <Text style={{ fontSize: 20, color: 'black',marginBottom: 10 }}>
+            Time for Visit  - 
             <Text style={{ color: Colors.heilightcolor }}>
               {selectedtime.getHours().toString().padStart(2, '0')}
             </Text> : 
@@ -299,11 +299,19 @@ const handleRequestProperty = async () => {
           </Text>
 
           <View style={{flexDirection: 'row',justifyContent: 'space-around',marginTop: 10,marginBottom: 10}}>
-          <TouchableOpacity onPress={() => setDatePickerVisibility(true)}>
+          <TouchableOpacity onPress={() => setDatePickerVisibility(true)} style={{flexDirection: 'row',marginRight: 9}}>
             <Text style={{ fontSize: 20, color: Colors.btn, }}>Select Date</Text>
+            <Icon
+              name="progress-clock"
+              style={styles.homedetailiconclock}
+            />
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => settimePickerVisibility(true)}>
+          <TouchableOpacity onPress={() => settimePickerVisibility(true)} style={{flexDirection: 'row'}}>
             <Text style={{ fontSize: 20, color: Colors.btn, }}>Select Time</Text>
+            <Icon
+              name="progress-clock"
+              style={styles.homedetailiconclock}
+            />
           </TouchableOpacity></View>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Input
@@ -455,6 +463,12 @@ const styles = StyleSheet.create({
     fontSize: 22,
     color: Colors.heilightcolor,
   },
+  homedetailiconclock:{
+   fontSize: 22,
+    color: Colors.btn,
+    marginLeft:4,
+    marginTop: 3
+  },
   optionCardtopsearch: {
     height: 100,
     width: 100,
@@ -491,7 +505,9 @@ bottomSheetContent: {
   right: 0,
   backgroundColor: Colors.background,
   paddingLeft: 20,
-  padding: 60,
+  // padding: 60,
+  paddingRight: 60,
+  // paddingLeft: 60,
   marginRight: 20,
   marginLeft: 20,
   justifyContent: 'center',

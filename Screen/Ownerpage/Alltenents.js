@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
-import { View, Text, FlatList, TouchableOpacity, Image, TextInput, StyleSheet, Dimensions, PanResponder,
+import { View, Text, FlatList, TouchableOpacity, Image, TextInput, StyleSheet, Dimensions, Surface,ScrollView,
   Animated, } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons'
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import Feather from 'react-native-vector-icons/Feather';
 import COLORS from '../../assets/const/colors';
 import { PinchGestureHandler, State } from 'react-native-gesture-handler';
+import { colors } from 'react-native-elements';
+import Colors from '../../constants/Colors';
 
 
 const { width } = Dimensions.get("screen");
@@ -32,6 +35,10 @@ function Alltenents({ navigation }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [scale, setScale] = useState(new Animated.Value(1));
 
+  const handltenentdetails = () => {
+    navigation.navigate('Tenentdetails');
+  }; 
+
   const onPinchEvent = Animated.event(
     [{ nativeEvent: { scale: scale } }],
     { useNativeDriver: false }
@@ -48,9 +55,21 @@ function Alltenents({ navigation }) {
 
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
+       <View style={styles.header}>
+        <View style={{ marginLeft: 20 }}>
+          <Feather
+            name="arrow-left"
+            size={25}
+            style={{ color: '#15273F' }}
+            onPress={navigation.goBack}
+          />
+        </View>
+        <View style={{ marginLeft: 100 }}>
+          <Text style={styles.headerText}>Tenents List</Text>
+        </View>
+      </View>
 
-<View style={styles.ownerhii}><Text style={styles.hiiowner}>Tenents List</Text></View>
 
 <View style={styles.containertenetlist}>
                 <View
@@ -74,15 +93,13 @@ function Alltenents({ navigation }) {
                 </View>
             </View>
 
-    <View
-                    style={{
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                        paddingHorizontal: 20,
-                        marginBottom: 10,
-                    }}>
+    <View style={{flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  paddingHorizontal: 20,
+                  marginBottom: 10,
+                  }}>
                     <View style={styles.searchInputContainer}>
-                        <Icon name="search" size={25} color={"#15beae"} />
+                        <Icon name="search" size={25} color={Colors.heilightcolor} />
                         <TextInput placeholder='Search address, city, location' />
                     </View>
 
@@ -98,7 +115,7 @@ function Alltenents({ navigation }) {
         <View
           style={styles.itemContainer }
         >
-          <TouchableOpacity style={styles.imageContainer}>
+          <TouchableOpacity style={styles.imageContainer}  onPress={handltenentdetails}>
             <Image source={item.image} style={styles.propertyImage} />
             
           </TouchableOpacity>
@@ -111,7 +128,7 @@ function Alltenents({ navigation }) {
       showsVerticalScrollIndicator={false} 
     />
     </View>
-  </View>
+  </ScrollView>
   
   );
 }
@@ -124,6 +141,18 @@ const styles = StyleSheet.create({
     padding: 16,
     backgroundColor: 'white',
   },
+  header: {
+    height: 50,
+    elevation: 4,
+    flexDirection: 'row',
+    backgroundColor: 'white',
+  },
+  headerText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: '#15273F',
+  },
   itemContainer: {
     flexDirection: 'row',
     borderWidth: 1,
@@ -133,7 +162,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     height: 100,
     backgroundColor: COLORS.white,
-    elevation: 10,
+    elevation: 5,
     width: width - 40,
     // marginBottom: 20,
     // borderRadius: 20,
@@ -165,6 +194,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 20,
     borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#ccc',
 },
 ownerhii: {
     marginLeft: 25,

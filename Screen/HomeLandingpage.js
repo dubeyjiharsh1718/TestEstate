@@ -1,18 +1,8 @@
 import React, { useState } from 'react';
 import {
-  View,
-  ScrollView,
-  Pressable,
-  TextInput,
-  Image,
-  Dimensions,
-  StyleSheet,
-} from 'react-native';
-import {
-  Text,
-  Icon as ElementsIcon,
-  Button,
-  Card as ElementsCard,
+  View,ScrollView, Pressable,  TextInput,  Image,  Dimensions, StyleSheet,} from 'react-native';
+import { Text,
+  Icon as ElementsIcon, Button, Card as ElementsCard,
 } from 'react-native-elements';
 import { useIsFocused } from '@react-navigation/native';
 import { useBackHandler } from '@react-native-community/hooks';
@@ -179,7 +169,7 @@ const HomeScreen = ({ navigation }) => {
       </View></View>
 
       <View>
-        <Text style={styles.modaltext}>Price Range</Text>
+        <Text style={styles.modaltextprice}>Price Range</Text>
         <Slider
           value={priceRange}
           minimumValue={0}
@@ -188,12 +178,12 @@ const HomeScreen = ({ navigation }) => {
           thumbTintColor="blue"
           trackStyle={{ height: 10, backgroundColor: 'lightgrey' }}
           thumbStyle={{ height: 20, width: 20, backgroundColor: 'blue' }}
-          onValueChange={(value) => setPriceRange(value)} // Update the priceRange state
+          onValueChange={(value) => setPriceRange(value)}
         />
         <Text style={{fontSize: 17, color: 'black'}}>{`Price Range: ${priceRange}`}</Text>
       </View>
-      <View>
-        <Text style={styles.modaltext}>Area Range</Text>
+      <View style={{marginTop: 10}}>
+        <Text style={styles.modaltextprice}>Area Range</Text>
         <Slider
           value={priceRange}
           minimumValue={0}
@@ -202,7 +192,7 @@ const HomeScreen = ({ navigation }) => {
           thumbTintColor="blue"
           trackStyle={{ height: 10, backgroundColor: 'lightgrey' }}
           thumbStyle={{ height: 20, width: 20, backgroundColor: 'blue' }}
-          onValueChange={(value) => setPriceRange(value)} // Update the priceRange state
+          onValueChange={(value) => setPriceRange(value)}
         />
         <Text style={{fontSize: 17, color: 'black'}}>{`Price Range: ${priceRange}`}</Text>
       </View>
@@ -246,7 +236,7 @@ const HomeScreen = ({ navigation }) => {
           renderItem={({ item, index }) => (
             <View style={styles.optionCard}>
               <Image source={item.img} style={styles.optionCardImage} />
-              <Text style={{ marginTop: 11, fontSize: 18, fontWeight: 'bold', color: COLORS.dark }}>{item.title}</Text>
+              <Text style={{ marginTop: 11,textAlign: 'center', fontSize: 18, fontWeight: 'bold', color: COLORS.dark }}>{item.title}</Text>
             </View>
           )}
           contentContainerStyle={styles.optionListContainer}
@@ -406,6 +396,7 @@ const styles = StyleSheet.create({
       elevation: 15,
       backgroundColor: COLORS.white,
       alignItems: 'center',
+      borderColor: 'blue',
       borderRadius: 100,
       paddingTop: 10,
       marginTop:10,
@@ -418,12 +409,12 @@ const styles = StyleSheet.create({
         width: width - 40,
         elevation: 15,
         backgroundColor: COLORS.white,
-        alignItems: 'center',
+        justifyContent: 'center',
         borderRadius: 10,
         paddingTop: 10,
         marginTop:20,
         paddingHorizontal: 10,
-        marginRight: 10,
+        marginRight: 15,
         marginBottom: 30,
     },
     optionCardImage: {
@@ -514,6 +505,11 @@ const styles = StyleSheet.create({
     modaltext:{
       color: 'black',
       marginBottom: 8,
+      fontSize: 17,
+    },
+    modaltextprice:{
+      color: 'black',
+      marginTop: 5,
       fontSize: 17,
     },
 
