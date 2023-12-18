@@ -1,6 +1,6 @@
 // RequestedProperty.js
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, StyleSheet, Image, TouchableOpacity, Dimensions } from 'react-native';
+import { View, Text, FlatList, StyleSheet, Image, TouchableOpacity, Dimensions,ActivityIndicator, } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Card, Button, ButtonGroup } from 'react-native-elements';
 import Colors from '../constants/Colors';
@@ -13,6 +13,7 @@ const { width, height } = Dimensions.get('screen');
 const RequestedProperty = () => {
   const navigation = useNavigation(); 
   const [requestProperties, setRequestProperties] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchRequestProperties = async () => {
@@ -22,6 +23,8 @@ const RequestedProperty = () => {
         setRequestProperties(requestProperties);
       } catch (error) {
         console.error('Error retrieving saved properties:', error);
+      }  finally {
+        setIsLoading(false); 
       }
     };
 
@@ -59,9 +62,22 @@ const RequestedProperty = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={[styles.title, { marginLeft: 20 }]}>Request For Visit Properties</Text>
-
-      {requestProperties.length === 0 ? (
+  <View style={styles.header}>
+        <View style={{ marginLeft: 20 }}>
+          <Feather
+            name="arrow-left"
+            size={25}
+            style={{ color: '#15273F' }}
+            onPress={navigation.goBack}
+          />
+        </View>
+        <View style={{ marginLeft: 80 }}>
+          <Text style={styles.headerText}>Visit Request</Text>
+        </View>
+      </View>
+      {isLoading ? (
+        <ActivityIndicator style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} size="large" color={Colors.heilightcolor} />
+      ) : requestProperties.length === 0 ? (
        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center',marginTop: -50 }}>
        <Image
          source={require('.././assets/images/wishlist.jpg')}
@@ -124,6 +140,18 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.background,
+  },
+  header: {
+    height: 50,
+    elevation: 4,
+    flexDirection: 'row',
+    backgroundColor: 'white',
+  },
+  headerText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: '#15273F',
   },
   title: {
     fontSize: 24,

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {
-  View,ScrollView, Pressable,  TextInput,  Image,  Dimensions, StyleSheet,} from 'react-native';
+  View,ScrollView, Pressable,TouchableOpacity,  TextInput,  Image,  Dimensions, StyleSheet,} from 'react-native';
 import { Text,
   Icon as ElementsIcon, Button, Card as ElementsCard,
 } from 'react-native-elements';
@@ -9,18 +9,37 @@ import { useBackHandler } from '@react-native-community/hooks';
 import { StatusBar } from 'react-native';
 import { Alert } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
-import EntypoIcon from 'react-native-vector-icons/Entypo';
 import AwesomeIcon from 'react-native-vector-icons/FontAwesome5';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Modal from 'react-native-modal';
 import { Slider } from 'react-native-elements';
-
 import COLORS from '../assets/const/colors';
 import Colors from '../constants/Colors';
-import houses from '../assets/const/houses';
 
 const { width, height } = Dimensions.get('screen');
+
+const propertyData = [
+  { id: '1', name: 'Simran Aim',bedrooms:2,bathrooms:4,area:3, price: '$200,000',description: '"We provide complete solutions to Property Buyers and Sellers to Buy, Sell, Resale, Rent their Apartments, Villas, Independent Homes, Plots and Commercial Properties."',location: 'Radha Complex, New DP Rd, Surya Nagar, Katrap, Badlapur, Maharashtra 421503' , image: require('../assets/images/house.jpg'),
+  allimages: [
+    require('../assets/images/house.jpg'),
+    require('../assets/images/login.png'),
+    require('../assets/images/house.jpg'),
+  ], },
+   { id: '2', name: 'Shivam Apt',bedrooms:2,bathrooms:4,area:3, price: '$300,000',description: '"We provide complete solutions to Property Buyers and Sellers to Buy, Sell, Resale, Rent their Apartments, Villas, Independent Homes, Plots and Commercial Properties."',location: 'Radha Complex, New DP Rd, Surya Nagar, Katrap, Badlapur, Maharashtra 421503', image: require('../assets/images/real-estate-6688945_1280.jpg'),
+   allimages: [
+    require('../assets/images/house.jpg'),
+    require('../assets/images/login.png'),
+    require('../assets/images/house.jpg'),
+  ], },
+   { id: '3', name: 'Harsh APT',bedrooms:2,bathrooms:4,area:3, price: '$400,000',description: '"We provide complete solutions to Property Buyers and Sellers to Buy, Sell, Resale, Rent their Apartments, Villas, Independent Homes, Plots and Commercial Properties."',location: 'Radha Complex, New DP Rd, Surya Nagar, Katrap, Badlapur, Maharashtra 421503', image: require('../assets/images/house.jpg'),
+   allimages: [
+    require('../assets/images/house.jpg'),
+    require('../assets/images/login.png'),
+    require('../assets/images/house.jpg'),
+  ], },
+ 
+];
 
 const HomeScreen = ({ navigation }) => {
   var location = 'Kalyan';
@@ -262,43 +281,15 @@ const HomeScreen = ({ navigation }) => {
     );
   };
 
-  const Card = ({ house }) => {
+  
     return (
-      <Pressable onPress={() => navigation.navigate("DetailsScreen", house)}>
-        <ElementsCard containerStyle={styles.card}>
-          <Image source={house.image} style={styles.cardImage} />
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 10 }}>
-            <Text style={{ fontSize: 15, fontWeight: 'bold', color: COLORS.dark, width: "65%" }} numberOfLines={1}>{house.title}</Text>
-            <Text style={{ fontSize: 15, fontWeight: 'bold', color: COLORS.dark }}>
-              Rs: <Text style={{ fontSize: 15, fontWeight: 'bold', color: "red" }}>{house.price}</Text>
-            </Text>
-          </View>
-          <Text style={{ color: COLORS.gray, fontSize: 14, marginTop: 5 }}>{house.location}</Text>
-          <View style={{ marginTop: 10, flexDirection: 'row' }}>
-            <View style={styles.facility}>
-              <Icon name='hotel' size={18} style={{ color: Colors.iconcolor }} />
-              <Text style={styles.facilityText}>{house.bedrooms}</Text>
-            </View>
-            <View style={styles.facility}>
-              <Icon name='bathtub' size={18} style={{ color: Colors.iconcolor }} />
-              <Text style={styles.facilityText}>{house.bathrooms}</Text>
-            </View>
-            <View style={styles.facility}>
-              <AwesomeIcon name='ruler-vertical' size={18} style={{ color: Colors.iconcolor }} />
-              <Text style={styles.facilityText}>{house.area}</Text>
-            </View>
-          </View>
-        </ElementsCard>
-      </Pressable>
-    );
-  };
-
-  return (
-    <SafeAreaView style={{ backgroundColor: COLORS.white, flex: 1 }}>
+      <SafeAreaView style={{ backgroundColor: COLORS.white, flex: 1 }}>
       <StatusBar translucent={false} backgroundColor={COLORS.white} barStyle='dark-content' />
       <View style={{ paddingVertical: 7, flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 20 }}>
         <View>
-        <AwesomeIcon name='map-marker-alt' size={26} style={{ color: Colors.iconcolor }} />
+          <TouchableOpacity>
+        <AwesomeIcon name='map-marker-alt' size={26} style={{ color: Colors.iconcolor }} onPress={() => navigation.navigate("Selectlocationtenent")} />
+        </TouchableOpacity>
           <Text style={{ color: 'black' }}>Location</Text>
         </View>
         <View>
@@ -334,16 +325,54 @@ const HomeScreen = ({ navigation }) => {
       </Modal>
         <ListOptions />
         <ListCategories />
-        <FlatList
-          contentContainerStyle={{ alignItems:'center', marginVertical: 20 }}
-          showsVerticalScrollIndicator={false}
-          showsHorizontalScrollIndicator={false}
-          data={houses}
-          renderItem={({ item }) => <Card house={item} />}
-        />
-      </ScrollView>
+
+      <FlatList
+      data={propertyData}
+      keyExtractor={(item) => item.id}
+      renderItem={({ item }) => (
+        <ElementsCard
+        containerStyle={styles.card}
+        >
+          <TouchableOpacity style={styles.imageContainer}
+           onPress={() => navigation.navigate('PropertyDetails', { property: item })}>
+            <Image source={item.image} style={styles.propertyImage} />
+            
+          </TouchableOpacity>
+         
+          
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 10 }}>
+            <Text style={{ fontSize: 15, fontWeight: 'bold', color: COLORS.dark, width: "65%" }} numberOfLines={1}>{item.name}</Text>
+            <Text style={{ fontSize: 15, fontWeight: 'bold', color: COLORS.dark }}>
+              Rs: <Text style={{ fontSize: 15, fontWeight: 'bold', color: "red" }}>{item.price}</Text>
+            </Text>
+          </View>
+          <Text style={{ color: COLORS.gray, fontSize: 14, marginTop: 5 }}>{item.location}</Text>
+          <View style={{ marginTop: 10, flexDirection: 'row' }}>
+            <View style={styles.facility}>
+              <Icon name='hotel' size={18} style={{ color: Colors.iconcolor }} />
+              <Text style={styles.facilityText}>{item.bedrooms}</Text>
+            </View>
+            <View style={styles.facility}>
+              <Icon name='bathtub' size={18} style={{ color: Colors.iconcolor }} />
+              <Text style={styles.facilityText}>{item.bathrooms}</Text>
+            </View>
+            <View style={styles.facility}>
+              <AwesomeIcon name='ruler-vertical' size={18} style={{ color: Colors.iconcolor }} />
+              <Text style={styles.facilityText}>{item.area}</Text>
+            </View>
+          </View>
+            {/* </View> */}
+           </ElementsCard>
+
+      )}
+      showsVerticalScrollIndicator={false}
+      showsHorizontalScrollIndicator={false}
+      contentContainerStyle={{ alignItems:'center', marginVertical: 20 }}
+    />
+          </ScrollView>
     </SafeAreaView>
-  );
+    );
+  
 };
 
 export default HomeScreen;
@@ -445,18 +474,22 @@ const styles = StyleSheet.create({
         paddingBottom: 5,
     },
     card: {
-        height: 320,
-        backgroundColor: COLORS.white,
-        elevation: 10,
-        width: width - 40,
-        marginBottom: 20,
-        padding: 15,
-        borderRadius: 20,
+      height: 320,
+      backgroundColor: COLORS.white,
+      elevation: 10,
+      width: width - 40,
+      marginBottom: 35,
+      padding: 15,
+      borderRadius: 20,
+      marginTop: 1,
+  },
+    imageContainer: {
+      alignItems: 'center',
     },
-    cardImage: {
-        width: '100%',
-        height: 200,
-        borderRadius: 15,
+    propertyImage: {
+      width: '100%',
+      height: 180,
+      borderRadius: 15,
     },
     facility: {
         flexDirection: 'row',
@@ -465,14 +498,6 @@ const styles = StyleSheet.create({
     facilityText: {
         marginLeft: 5,
         color: COLORS.gray,
-    },
-    optionListtext:{
-      marginTop: 14,
-      alignItems: "center",
-    },
-    optionListtexttopseach:{
-      marginTop: 14,
-      marginLeft: 25,
     },
     Listtext:{
       fontSize: 20,

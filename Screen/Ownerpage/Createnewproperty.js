@@ -28,10 +28,7 @@ function Createnewproperty({ navigation }) {
 
   const [currentSection, setCurrentSection] = useState('Overview');
   const [selectedSection, setSelectedSection] = useState('Overview');
-  // const [selectedSection, setSelectedSection] = useState('Overview'); 
   const sections = ['Overview', 'Location', 'Amenities', 'Photo'];
-
-
 
 
   const [value, setValue] = useState(null);
@@ -42,10 +39,6 @@ function Createnewproperty({ navigation }) {
   };
 
  
-
-  // const handleSectionClick = (section) => {
-  //   setCurrentSection(section);
-  // };
 
   const handleSectionClick = (section) => {
     setCurrentSection(section);
@@ -63,9 +56,10 @@ function Createnewproperty({ navigation }) {
 
   const navigateToPreviousSection = () => {
     const currentIndex = sections.indexOf(currentSection);
-    if (currentIndex > 0) {
+    if (currentIndex < sections.length + 1) {
       const previousSection = sections[currentIndex - 1];
       setCurrentSection(previousSection);
+      setSelectedSection(previousSection);
     }
   };
 
@@ -710,7 +704,7 @@ const styles = StyleSheet.create({
   optionCardtopsearch: {
     height: 40,
     width: 120,
-    elevation: 5,
+    elevation: 1,
     backgroundColor: 'white',
     // color: 'black',
     alignItems: 'center',
@@ -749,7 +743,8 @@ const styles = StyleSheet.create({
     color: 'black'
   },
   activeSection: {
-    backgroundColor: Colors.heilightcolor,
+    borderBottomWidth: 2,
+    borderBottomColor: 'blue',
   },
   locationtext:{
     fontSize: 18,

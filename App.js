@@ -27,6 +27,9 @@ import Menu from './Screen/Menu';
 import PropertyListScreen from './Screen/PropertyListScreen';
 import Transactiondetails from './Screen/Ownerpage/Transactiondetails';
 import Tenentdetails from './Screen/Ownerpage/Tenentdetails';
+import AddDocument from './Screen/Ownerpage/AddDocument';
+import Notificationrequest from './Screen/Ownerpage/Notificationrequest';
+import Selectlocationtenent from './Screen/Selectlocationtenent';
 
 const Stack = createStackNavigator();
 
@@ -61,6 +64,9 @@ export default function App() {
         <Stack.Screen name='Tenentdetails' component={Tenentdetails} />
         <Stack.Screen name='Transactiondetails' component={Transactiondetails} />
         <Stack.Screen name="OwnerHome" component={OwnerHome} />
+        <Stack.Screen name='AddDocument' component={AddDocument} />
+        <Stack.Screen name='Notificationrequest' component={Notificationrequest} />
+        <Stack.Screen name='Selectlocationtenent' component={Selectlocationtenent} />
         <Stack.Screen name="Selectlocation" component={Selectlocation} />
         <Stack.Screen name="PropertyDetails" component={PropertyDetailsScreen} />
       </Stack.Navigator>

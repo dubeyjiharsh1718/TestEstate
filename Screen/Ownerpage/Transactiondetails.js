@@ -63,12 +63,12 @@ function Transactiondetails({ navigation }) {
           </View>
           <View style={{flexDirection: 'row',}}>
           <Icon name='home' type='material' color={Colors.heilightcolor} size={22} />
-          <Text style={{fontSize: 17,marginLeft: 5}}>Nutan Apt 101</Text>
+          <Text style={{fontSize: 17,marginLeft: 5,color: '#353535'}}>Nutan Apt 101</Text>
           </View>
           </View>
           <View style={styles.locationContainer}>
-          <Text style={{fontSize: 22,color: 'red',marginBottom: 8}}>$256</Text>
-          <Text style={{fontSize: 17,}}>20 Jan 2023</Text>
+          <Text style={{fontSize: 20,color: 'red',marginBottom: 8}}>$256</Text>
+          <Text style={{fontSize: 17,color: '#353535'}}>20 Jan 2023</Text>
             </View>
         </View>
         </View>
@@ -267,13 +267,14 @@ image: {
     color:"white",
   },
   transname: {
-    fontSize: 22,
+    fontSize: 20,
     color: 'black',
     marginBottom: 3,
   },
   attachment:{
     fontSize: 17,
     marginLeft: 3,
+    color: '#353535',
   },
   itemmaincontainer:{
     height: 120, 

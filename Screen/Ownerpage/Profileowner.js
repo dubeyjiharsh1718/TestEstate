@@ -91,7 +91,7 @@ export default function Profile({ navigation }) {
         </View>
       </Surface> */}
 
-      <TouchableOpacity onPress={() => navigation.navigate("ViewDetails")}  style={styles.profileInfo}>
+      <Pressable style={styles.profileInfo}>
         <View style={styles.imageContainer}>
           <Image source={profileImage} style={styles.profileImageStyle} />
         </View>
@@ -99,9 +99,9 @@ export default function Profile({ navigation }) {
           <Text style={styles.accountTitle}>{fullname}</Text>
           <Text style={{ fontFamily: "sans-serif-light", fontSize: 14, color: "gray" }}>{useremail}</Text>
         </View>
-      </TouchableOpacity>
+      </Pressable>
 
-      <Pressable onPress={() => navigation.navigate('EditProfile')}>
+      <TouchableOpacity onPress={() => navigation.navigate("ViewDetails")}>
         <View style={styles.action}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <View style={[styles.iconContainer, { backgroundColor: Colors.btn }]}>
@@ -113,7 +113,7 @@ export default function Profile({ navigation }) {
           </View>
           <Icon name={'chevron-right'} size={25} color={'#15273F'} />
         </View>
-      </Pressable>
+      </TouchableOpacity>
 
       <Pressable onPress={() => navigation.navigate('Location')}>
         <View style={styles.action}>
@@ -128,8 +128,19 @@ export default function Profile({ navigation }) {
           <Icon name={'chevron-right'} size={25} color={'#15273F'} />
         </View>
       </Pressable>
-
-      <Action title={'Notifications'} icon={'notifications'} />
+      <TouchableOpacity onPress={() => navigation.navigate('Notificationrequest')}>
+      <View style={styles.action}>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <View style={[styles.iconContainer, { backgroundColor: Colors.heilightcolor }]}>
+              <Icon name={'notifications-active'} size={23} color={'white'} />
+            </View>
+            <Text style={[styles.actionTitle, { color: Colors.heilightcolor}]}>
+              Notifications
+            </Text>
+          </View>
+          <Icon name={'chevron-right'} size={25} color={'#15273F'} />
+        </View>
+      </TouchableOpacity>
       <Action title={'Deactivation'} icon={'delete'} />
       <Action title={'Help & Support'} icon={'help'} />
 

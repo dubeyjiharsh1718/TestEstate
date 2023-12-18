@@ -18,7 +18,6 @@ import { Button } from 'react-native-elements';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useBackHandler } from '@react-native-community/hooks';
 import { Modal } from 'react-native';
-import EntypoIcon from 'react-native-vector-icons/Entypo';
 import AwesomeIcon from 'react-native-vector-icons/FontAwesome5';
 import { useIsFocused } from '@react-navigation/native';
 import COLORS from '../../assets/const/colors';
@@ -46,6 +45,9 @@ const OwnerLanddpage = ({ navigation }) => {
     const handluploadpropertyPress = () => {
         navigation.navigate('Createnewproperty');
       }; 
+      const handladddocument = () => {
+        navigation.navigate('AddDocument');
+      };
 
       const handluptransaction = () => {
         navigation.navigate('Transactiondetails');
@@ -119,13 +121,15 @@ const OwnerLanddpage = ({ navigation }) => {
                 </TouchableOpacity>
                 <TouchableOpacity
                    style={styles.item}
-                   onPress={toggleModal}
+                   onPress={handladddocument}
                   >
                   <Image source={require('../../assets/images/document.png')} style={styles.image} />
                   <Text style={styles.addtext}>Add Document</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                    style={styles.item}
+                   onPress={toggleModal}
+                   
                   >
                   <Image source={require('../../assets/images/addreport.jpg')} style={styles.image} />
                   <Text style={styles.addtext}>Report</Text>
@@ -228,7 +232,7 @@ const OwnerLanddpage = ({ navigation }) => {
           <Text style={{ marginTop: 7, fontSize: 12, marginRight: 5, textAlign: 'right' }}>Welcome Back</Text>
           <Text style={{ fontSize: 16, fontWeight: 'bold', marginRight: 5, textAlign: 'right', color: COLORS.dark }}>{PersonName}</Text>
         </View>
-        <Pressable onPress={() => navigation.navigate("UserProfile")}>
+        <Pressable>
           <View>
             <Image source={require("../../assets/images/house.jpg")} style={styles.profileImage} />
           </View>
@@ -236,7 +240,6 @@ const OwnerLanddpage = ({ navigation }) => {
             </View>
             <ScrollView showsVerticalScrollIndicator={false}>
                 <ListOptions />
-
                 <FlatList
                     contentContainerStyle={{ paddingLeft: 20, marginVertical: 20 }}
                     showsVerticalScrollIndicator={false}

@@ -36,7 +36,7 @@ const ViewDetails = ({ route, navigation }) => {
      setIsDateEditing(true);
      setDatePickerVisibility(true);
    };
- 
+
    const handleDateConfirm = (date) => {
      setSelectedDate(date);
      setIsDateEditing(false);
@@ -50,7 +50,7 @@ const ViewDetails = ({ route, navigation }) => {
 
   const [profileImage, setProfileImage] = useState(
     require("../assets/images/tenent2.jpeg")
-  ); 
+  );
   const handleImageSelect = () => {
     ImagePicker.openPicker({
     }).then((response) => {
@@ -61,7 +61,7 @@ const ViewDetails = ({ route, navigation }) => {
       console.log('ImagePicker Error: ', error);
     });
   };
-  
+
 
 
   const handleEdit = () => {
@@ -166,7 +166,7 @@ const ViewDetails = ({ route, navigation }) => {
             />
           </View>
         </View>
-   
+
         <View style={action ? styles.actionEditing : styles.action}>
   <View style={{ flexDirection: 'row', alignItems: 'center' }}>
     <TouchableOpacity >
@@ -245,7 +245,7 @@ const ViewDetails = ({ route, navigation }) => {
           </View>
         </View>
       </View>
-      <View>
+      {/* <View>
         <Text
           style={{
             marginVertical: 10,
@@ -257,7 +257,7 @@ const ViewDetails = ({ route, navigation }) => {
           }}>
           Personal information setting
         </Text>
-      </View>
+      </View> */}
       <DateTimePickerModal
       isVisible={isDatePickerVisible}
       mode="date"
@@ -270,7 +270,7 @@ const ViewDetails = ({ route, navigation }) => {
 
 const styles = StyleSheet.create({
   action: {
-    marginTop: 10,
+    marginTop: 3,
     paddingHorizontal: 29,
     flexDirection: 'row',
     justifyContent: 'space-between',

@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, StyleSheet, Image,TouchableOpacity,Dimensions } from 'react-native';
+import { View, Text, FlatList, StyleSheet, Image,TouchableOpacity,Dimensions,ActivityIndicator  } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Card, Button } from 'react-native-elements';
 import Colors from '../constants/Colors';
+import Feather from 'react-native-vector-icons/Feather';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import COLORS from '../assets/const/colors';
 import Toast from 'react-native-toast-message';
@@ -13,6 +14,7 @@ const { width, height } = Dimensions.get('screen');
 const SavedProperty = () => {
   const navigation = useNavigation(); 
   const [savedProperties, setSavedProperties] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const handlefindproperty = () => {
     navigation.navigate('PropertyListScreen')
@@ -26,6 +28,9 @@ const SavedProperty = () => {
         setSavedProperties(savedProperties);
       } catch (error) {
         console.error('Error retrieving saved properties:', error);
+      }
+      finally {
+        setIsLoading(false); 
       }
     };
 
@@ -56,8 +61,23 @@ const SavedProperty = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={[styles.title, { marginLeft: 20 }]}>Saved Properties</Text>
-      {savedProperties.length === 0 ? (
+         <View style={styles.header}>
+        <View style={{ marginLeft: 20 }}>
+          <Feather
+            name="arrow-left"
+            size={25}
+            style={{ color: '#15273F' }}
+            onPress={navigation.goBack}
+          />
+        </View>
+        <View style={{ marginLeft: 80 }}>
+          <Text style={styles.headerText}>Saved Properties</Text>
+        </View>
+      </View>
+      {/* <Text style={[styles.title, { marginLeft: 20 }]}></Text> */}
+      {isLoading ? (
+        <ActivityIndicator style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} size="large" color={Colors.heilightcolor} />
+      ) : savedProperties.length === 0 ? (
        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center',marginTop: -50 }}>
        <Image
          source={require('.././assets/images/wishlist.jpg')}
@@ -80,23 +100,18 @@ const SavedProperty = () => {
         data={savedProperties}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item, index }) => (
-          <View
-          style={styles.card}
-        >
-            <TouchableOpacity style={styles.imageContainer}>
-            <Image source={item.image} style={styles.propertyImage} />
-            
-          </TouchableOpacity>
+          <View style={styles.card}>
+            <View style={styles.imageContainer}>
+            <Image source={item.image} style={styles.propertyImage} />          
+          </View>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', }}>
             <Text style={{ fontSize: 15, fontWeight: 'bold', color: COLORS.dark, width: "65%" }} numberOfLines={1}>{item.title}</Text>
             <FontAwesome  onPress={() => handleUnsaveProperty(index)} name="heart" style={styles.homedetailicon} />
           </View>
             <View style={[styles.buttonContainer,{flexDirection:'row',justifyContent: 'space-between',}]}>
                 <Text style={{fontSize: 18,color:'black'}}>{item.price}</Text>
-               
             </View>
             <View style={styles.propertyRow}>
-          {/* <FontAwesome5 name="map-marker-alt" style={styles.locationIcon} /> */}
           <Text style={styles.propertyValue}>{item.location}</Text>
         </View>
           </View>
@@ -115,7 +130,18 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.background,
-    // padding: 20,
+  },
+  header: {
+    height: 50,
+    elevation: 4,
+    flexDirection: 'row',
+    backgroundColor: 'white',
+  },
+  headerText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: '#15273F',
   },
   title: {
     fontSize: 24,

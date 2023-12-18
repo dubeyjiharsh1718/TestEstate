@@ -73,7 +73,7 @@ export default function Profile({ navigation }) {
         <View style={{ marginRight: 20 }}>
           <Pressable>
             <Feather
-              name='share-2'
+              name=''
               size={25}
               style={{ color: '#15273F' }}
             />

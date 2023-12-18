@@ -94,7 +94,7 @@ function Tenentdetails({ navigation }) {
           </View>
           </View>
           <View style={styles.locationContainer}>
-          <Text style={{fontSize: 22,color: 'red',marginBottom: 8}}>$256</Text>
+          <Text style={{fontSize: 20,color: 'red',marginBottom: 8}}>$256</Text>
           <Text style={{fontSize: 17,color: '#353535'}}>20 Jan 2023</Text>
             </View>
         </View>
@@ -117,7 +117,7 @@ function Tenentdetails({ navigation }) {
           </View>
           </View>
           <View style={styles.locationContainer}>
-          <Text style={{fontSize: 22,color: 'red',marginBottom: 8}}>$227</Text>
+          <Text style={{fontSize: 20,color: 'red',marginBottom: 8}}>$227</Text>
           <Text style={{fontSize: 17,color: '#353535'}}>20 Jan 2023</Text>
             </View>
         </View>
@@ -140,7 +140,7 @@ function Tenentdetails({ navigation }) {
           </View>
           </View>
           <View style={styles.locationContainer}>
-          <Text style={{fontSize: 22,color: 'red',marginBottom: 8}}>$411</Text>
+          <Text style={{fontSize: 20,color: 'red',marginBottom: 8}}>$411</Text>
           <Text style={{fontSize: 17,color: '#353535'}}>20 Jan 2023</Text>
             </View>
         </View>
@@ -163,7 +163,7 @@ function Tenentdetails({ navigation }) {
           </View>
           </View>
           <View style={styles.locationContainer}>
-          <Text style={{fontSize: 22,color: 'red',marginBottom: 8}}>$256</Text>
+          <Text style={{fontSize: 20,color: 'red',marginBottom: 8}}>$256</Text>
           <Text style={{fontSize: 17,color: '#353535'}}>20 Jan 2023</Text>
             </View>
         </View>
@@ -186,7 +186,7 @@ function Tenentdetails({ navigation }) {
           </View>
           </View>
           <View style={styles.locationContainer}>
-          <Text style={{fontSize: 22,color: 'red',marginBottom: 8}}>$300</Text>
+          <Text style={{fontSize: 20,color: 'red',marginBottom: 8}}>$300</Text>
           <Text style={{fontSize: 17,color: '#353535'}}>20 Jan 2023</Text>
             </View>
         </View>
@@ -295,7 +295,7 @@ image: {
     color:"white",
   },
   transname: {
-    fontSize: 22,
+    fontSize: 20,
     color: 'black',
     marginBottom: 3,
   },
