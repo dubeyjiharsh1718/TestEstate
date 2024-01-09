@@ -50,7 +50,7 @@ const LoginScreen = ({ navigation }) => {
   };
 
   const handleSkip = () => {
-    navigation.navigate('OwnerHome');
+    navigation.navigate('Home');
   };
 
 
@@ -192,7 +192,7 @@ const handleLogin = async () => {
           {loginLoading  && (
           <ActivityIndicator size="large" color="#0000ff" style={{ marginTop: 10,marginBottom: 10 }} />
           )}
-          <Button title={'Login'} onPress={handleLogin} buttonStyle={styles.registerButton}  disabled={loginLoading} />
+          <Button title={'Login'} onPress={handleSkip} buttonStyle={styles.registerButton}  disabled={loginLoading} />
 
           <View style={{ flexDirection: 'row', justifyContent: 'center', marginBottom: 20, marginTop: 6 }}>
             <Text>Don't have an account?</Text>

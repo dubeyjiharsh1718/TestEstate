@@ -163,16 +163,13 @@ const OwnerLanddpage = ({ navigation }) => {
             </View>
             
           </View>
-          <Modal
-    animationIn="slideInUp"
-    animationOut="slideOutDown"
-    backdropOpacity={0.5}
-    animationType="slide"
-    transparent={true}
-    visible={modalVisible}
-    onRequestClose={() => {
-      setModalVisible(!modalVisible);
-    }}
+          <Modal animationIn="slideInUp"  animationOut="slideOutDown" backdropOpacity={0.5}
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            setModalVisible(!modalVisible);
+          }}
   >
     <View style={styles.overlay} />
 

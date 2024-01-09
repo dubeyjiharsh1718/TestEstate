@@ -34,9 +34,9 @@ import Selectlocationtenent from './Screen/Selectlocationtenent';
 const Stack = createStackNavigator();
 
 export default function App() {
-  useEffect(() => {
-    SplashScreen.hide();
-  }, []);
+  // useEffect(() => {
+  //   SplashScreen.hide();
+  // }, []);
 
   return (
     <NavigationContainer>
